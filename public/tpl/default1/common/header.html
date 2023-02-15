@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<?php $menu = getMenu();?> 
+<?php $register_validate = empty(get_config('register_validate')) ? 0 : get_config('register_validate');?>
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name="renderer" content="webkit">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+<meta name="csrf-param" content="_csrf-frontend">
+<title>{$page_title|default=""}_{$seo['site_title']}</title>
+<meta name="keywords" lang="zh-CN" content="{$seo['site_keywords']}"/>
+<meta name="description" lang="zh-CN" content="{$seo['site_description']}" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE10" />
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<script type="text/javascript" src="__ROOT__/tpl/mscms/msvodx/js/msvodx.js"></script>
+<link href="__ROOT__/tpl/mscms/peixin/css/msvod.css?v=1.0" rel="stylesheet">
+<script>
+layui.use(['form', 'layedit', 'laydate'], function(){
+});
+if(!!window.ActiveXObject || "ActiveXObject" in window){
+location.href="{:url('index/remind')}"
+}
+</script>
+<!--[if lt IE 9]>
+<script src="__ROOT__/tpl/mscms/msvodx/js/html5.min.js"></script>
+<script src="__ROOT__/tpl/mscms/msvodx/js/respond.min.js"></script>
+<![endif]--> 
+</head>
+
+<body>
+<?php $controller = lcfirst(request()->controller());?>
+<?php $memberInfo = get_member_info();$login_status = check_is_login();?>
+<header class="stui-header__top clearfix" id="header-top">
+
+  <div class="container">
+
+    <div class="row">
+    
+      <div class="stui-header_bd clearfix">
+
+        <div class="stui-header__logo"> <a class="logo" href="/"></a> </div>
+        <div class="stui-header__side">
+
+		<?php $memberInfo = get_member_info();$login_status = check_is_login();?>
+          <ul class="stui-header__user" style="margin-left:-15px;">
+		    {if condition="$login_status['resultCode'] neq 1 "}
+           <li style="color:#fff;padding:16px 0 10px;"><a class="mac_user Register" href="/index/login.html">{:lang('Login')} / {:lang('Register')}</a></li>
+		    {else/}
+		    <li style="color:#fff;padding:15px 0 10px;">
+          <a class="mac_user" style="color:#19d8a5;" href="{:url('member/member')}">
+          <img width="30" height="30" style="border-radius:10px;" class="logged" src="{if condition="session('member_info')['headimgurl'] neq ''"}{:session('member_info')['headimgurl']}{else/}/static/images/user_dafault_headimg.jpg{/if}" title="{:lang('LoginYes')}"> {:session('member_info')['nickname']} &nbsp;</a>
+          <a href="javascript:void(0);" class="user-out" onclick="logout()" title="{:lang('Logout')}">{:lang('Logout')}</a>
+        </li>
+		    {/if}
+          </ul>
+        {if condition="count($menu) lt 6"}  
+          <div class="stui-header__search">
+            <form id="search" name="search" method="POST" action="/search/index/type/video.html" onSubmit="return qrsearch();">
+              <input type="text" name="key_word" id="key_word" class="mac_wd form-control" placeholder="{:lang('Video')}：{:lang('Keyword')}" style="border-radius:5px;" />
+              <button class="submit" type="submit" id="keyword" name="submit"><i class="icon iconfont icon-search"></i></button>
+            </form>
+          </div>
+        {/if}
+        </div>
+        <ul class="stui-header__menu type-slide">
+          {volist name="menu" id="vo" length='6'}
+            <li {if condition="$vo['current'] eq 1"} class="active center" {/if}>
+              <a href="{$vo['url']}" class="memu" {if condition="$vo['target'] eq 1"} target="_blank" {/if} style="color:{$vo['color']}">{$vo['name']}</a>
+            </li>
+          {/volist}
+        </ul>
+      </div>
+    </div>
+  </div>
+  {if condition="count($allLang) gt 1"}
+    <div class="language" onclick="language(this,1)">
+      <div class="language_present">
+        <img src="{:lang('LangsIco')}" class="language_ico"> {:lang('Language')}
+      </div>
+      <div class="language_list">
+        {volist name="allLang" id="v"}
+          <div class="language_state {if condition='$v eq $language'}ok{/if}" onclick="select_language('{$v}')">
+            {:transfer_language($v,'Language')} <img src="{:transfer_language($v,'LangsIco')}" class="language_ico">
+          </div>
+        {/volist} 
+      </div>
+    </div>
+  {/if}
+</header>
+<style>
+  .memu{width:auto!important;}
+  .Register{display:inline-block;border:1px solid #333;height:28px;line-height:28px;padding:0 15px;border-radius:3px;}  
+  .center{text-align:center;}
+  .language{display:inline-block;position:absolute;top:0px;right:0px;cursor:pointer;margin-right:40px;}
+  .language_present{display:inline-block;color:#fff;text-align:center;background:#f59d1b;width:100%;height:57px;line-height:56px;padding:0 10px;}
+  .language_ico{width:30px;}
+  .language_list{background:#f59d1b;border-bottom-left-radius:5px;border-bottom-right-radius:5px;padding:10px;color:#fff;margin-top:-0px;border-top:2px solid #666;display:none;}
+  .language_state{border:1px solid #fff;line-height:30px;padding:0 5px;border-radius:5px;margin-bottom:5px;text-align:right;}
+  .ok{border:1px solid #2F4056;}
+</style>
+<script type="text/javascript">
+$(".stui-header__logo .logo").css("background","url({$seo['site_logo']}) no-repeat");
+</script>
+<script type="text/javascript">
+var cpa_uid="{:request()->param('uid/d')}"; //cpa
+//console.log("当前用户Id:{:session('member_id')}");
+var disabled = 0;
+var register_validate = "{:$register_validate}";
+if(register_validate == 1){
+var reg_userName = "{:lang('Email')}";
+}else if(register_validate == 2){
+var reg_userName = "{:lang('Phone')}";
+}else{
+var reg_userName = "{:lang('Users')}";
+}
+function login() {
+var user = $('#userName').val();
+var password = $('#password').val();
+var verifyCode=$('#verifyCode');
+if (user == '' || password == '') {
+layer.msg(reg_userName+"{:lang('NotNull')}", {icon: 2, anim: 6, time: 1000});
+return false;
+}
+if(verifyCode.val()==''){
+layer.msg("{:lang('SeekCode')}", {icon: 2, anim: 6, time: 1000});
+verifyCode.focus();
+return false;
+}
+var url = "{:url('api/login')}";
+$.post(url, {userName: user, password: password,verifyCode:verifyCode.val()}, function (data) {
+
+if (data.statusCode == 0) {
+layer.msg("{:lang('LoginOk')}", {time: 1000, icon: 1}, function() {
+location.reload();
+});
+} else {
+layer.msg(data.error, {icon: 2, anim: 6, time: 1000});
+$("#verifyCodeImg").click();
+}
+}, 'JSON');
+}
+$(document).keyup(function(event){
+if(event.keyCode ==13){
+if($(".login").is(":hidden")){
+return null;
+}else{
+login();
+}
+}
+});
+function codetTmes() {
+var second = $('#register_code').html();
+second--;
+if(second > 0){
+$('#register_code').html(second);
+setTimeout("codetTmes()",1000);
+}else{
+$('#register_code').html("{:lang('GetCode')}");
+disabled = 0;
+}
+}
+function getCode(){
+var user = $('#reg_userName').val();
+if(disabled)  return false;
+if (user == '') {
+$('#reg_userName').focus();
+layer.msg(reg_userName+"{:lang('NotNull')}", {icon: 2, anim: 6, time: 1000});
+return false;
+}
+var url = "{:url('api/getRegisterCode')}";
+$.post(url, {username: user,reg_username:reg_userName}, function (data) {
+if (data.statusCode == 0) {
+disabled = 1;
+layer.msg(data.error, {icon: 1, anim: 6, time: 3000});
+$('#register_code').html('60');
+codetTmes();
+}else{
+layer.msg(data.error, {icon: 2, anim: 6, time: 1000});
+}
+}, 'JSON');
+}
+function register(){
+var user = $('#reg_userName').val();
+var password = $('#reg_pwd').val();
+var confirm_password=$('#reg_pwd_re').val();
+var verifyCode=$('#codes').val();
+var nickname = $('#nickname').val();
+if (user == '') {
+layer.msg(reg_userName+"{:lang('NotNull')}", {icon: 2, anim: 6, time: 1000});
+return false;
+}
+if (nickname == '') {
+layer.msg("{:lang('NickName')}"+"{:lang('NotNull')}", {icon: 2, anim: 6, time: 1000});
+return false;
+}
+if (password == '') {
+layer.msg("{:lang('IsLogPwd')}", {icon: 2, anim: 6, time: 1000});
+return false;
+}
+if (password != confirm_password) {
+layer.msg("{:lang('Unlike')}", {icon: 2, anim: 6, time: 1000});
+return false;
+}
+if(verifyCode==''){
+layer.msg("{:lang('SeekCode')}", {icon: 2, anim: 6, time: 1000});
+$('#codes').focus();
+return false;
+}
+var url = "{:url('api/register')}";
+$.post(url, {username: user,nickname:nickname, password: password,confirm_password:confirm_password,verifyCode:verifyCode,cpa_uid:cpa_uid}, function (data) {
+if (data.statusCode == 0) {
+console.log(data);
+layer.msg("{:lang('RegOk')}", {time: 1000, icon: 1}, function() {
+location.reload();
+});
+}else{
+layer.msg(data.error, {icon: 2, anim: 6, time: 1000});
+}
+}, 'JSON');
+}
+function sign(){
+var url = "{:url('api/sign')}";
+$.post(url, {}, function (data) {
+if (data.resultCode == 0) {
+$('.sign-btn').find('var').html('+'+data.data['value']);
+$('.sign-btn').addClass("signs");
+$('.sign-btn').addClass("Completion");
+layer.msg("{:lang('SignOk')}",  {icon: 1, anim: 6, time: 2000},function () {
+$('.sign-btn').removeClass("signs");
+});
+}else{
+layer.msg(data.error, {icon: 2, anim: 6, time: 2000});
+}
+}, 'JSON');
+}
+function logout(){
+var url="{:url('api/logout')}";
+$.post(url,{},function(){
+layer.msg("{:lang('LogoutOk')}", {time: 1000, icon: 1}, function() {
+location.reload();
+});
+},'JSON');
+}
+//$.post("",{userName:})
+$(function () {
+$(".select-loginType .account-login").click(function(){
+$(this).parent().hide().siblings().show();
+});
+$(".return-qqWechat").click(function () {
+$(this).parent().parent().hide().siblings().show();
+});
+});
+//搜索
+$(document).on('click','#keyword', function () {
+  var key_word = $('#key_word').val();
+  if (key_word.length <= 0) {
+    layer.msg("{:lang('Keyword')}", {icon: 2, anim: 6, time: 2000});
+    return false;
+  }
+});
+// 语言切换
+function language(obj, type){
+  if(type == 1){
+    $(obj).attr('onclick',"language(this,2)");
+    $('.language_list').show(10);
+  }else{
+    $(obj).attr('onclick',"language(this,1)");
+    $('.language_list').hide(10);
+  }
+}
+function select_language(language) {
+    window.location.href = "?lang="+language; 
+}
+</script>

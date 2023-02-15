@@ -1,0 +1,65 @@
+{include file="common/header"} 
+<br>
+<br>
+<br>
+<br>
+<br>
+<div class="container">
+<div class="row">
+<!--
+<div class="stui-pannel stui-pannel-bg clearfix">
+  <div class="stui-pannel-box">
+    <div class="col-pd"> <a class="hidden-xs" target="_blank" href="http://www.msvod.cc/"> <img class="img-responsive" src="/XResource/20190919/izDst2ihXD6E6xEmBMFikXAz8d3rFNpf.png"  style="margin:0 auto; width:100%;border-radius:10px;"/> </a> </div>
+  </div>
+</div>
+-->
+<div class="stui-pannel clearfix">
+  <div class="stui-pannel-box padding-0">
+    <div class="col-lg-wide-75 col-xs-1 padding-0">
+      <div class="col-pd stui-pannel-bg">
+        <div class="stui-pannel_hd">
+          <div class="stui-pannel__head clearfix"> <a class="more text-muted pull-right" href="#"  style="margin-left:10px;">共<b style="color:red;font-size:20px;"> {$count} </b>个筛选结果</a> 
+            <h3 class="title"> <img src="__ROOT__/tpl/mscms/msvodx/picture/icon_1.png"/> <a href="#">课程搜索结果</a> </h3>
+          </div>
+        </div>
+        <div class="stui-pannel_bd clearfix"> 
+		 {notempty name="list"}
+          <ul class="stui-vodlist clearfix">
+          {volist name="list" id="v"}
+		  <?php
+            $regex  = '/('.$key_word.')/i';
+            preg_match_all($regex,$v['title'],$rs);
+            foreach($rs[1] as $val){
+            $keywords =$val;
+            $v['title'] = str_replace( $keywords,"<font color=red>$keywords</font>",$v['title']);
+            }
+            ?>
+            <li class="col-md-5 col-sm-4 col-xs-3 ">
+              <div class="stui-vodlist__box"> <a class="stui-vodlist__thumb lazyload" href="{:url('video/play',array('id'=>$v['id']))}" title="{$v['title']}" data-original="{$v['thumbnail']}" style="border-radius:15px;background: url({$v['thumbnail']}) no-repeat; background-position:50% 50%; background-size: cover;"> <span class="play hidden-xs"></span> <span class="pic-text text-right">{$v['play_time']}</span> </a>
+                <div class="stui-vodlist__detail">
+                  <h4 class="title text-overflow"><a href="{:url('video/play',array('id'=>$v['id']))}"  title="{$v['title']}">{$v['title']}</a> </h4>
+                  <p class="text text-overflow text-muted hidden-xs">20{$v['update_time']|date="y-m-d",###} <span style="margin-left:25px;"> <i class="fa fa-dot-circle-o fa-lg"></i> {$v['gold']}</span> <span style="float:right;"><i class="fa fa-eye fa-lg"></i> {$v['click']}</span></p>
+                </div>
+              </div>
+            </li>
+            {/volist} 
+            {else/}
+            <div align="center" class="not-data" style="height:50px;color:red;">暂时没有数据 ~</div>
+          </ul>
+          {/notempty} 
+		  </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ul class="stui-page text-center cleafix">
+{$pages}
+</ul>
+<!--
+<div class="stui-pannel stui-pannel-bg clearfix">
+  <div class="stui-pannel-box">
+    <div class="col-pd"> <a class="hidden-xs" target="_blank" href="http://www.msvod.cc/"> <img class="img-responsive" src="/XResource/20190919/izDst2ihXD6E6xEmBMFikXAz8d3rFNpf.png"  style="margin:0 auto; width:100%;border-radius:10px;"/> </a> </div>
+  </div>
+</div>
+-->
+{include file="common/footer"}

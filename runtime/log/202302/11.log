@@ -1,0 +1,16 @@
+---------------------------------------------------------------
+[ 2023-02-11T07:49:00+08:00 ] 172.31.16.210 58.17.6.9 GET /
+[ info ] www.w3a.one/ [运行时间：0.052471s][吞吐率：19.06req/s] [内存消耗：4,215.92kb] [文件加载：75]
+[ error ] [8]未定义数组索引: HTTP_ACCEPT_LANGUAGE[/www/wwwroot/www.w3a.one/application/controller/BaseController.php:83]
+---------------------------------------------------------------
+[ 2023-02-11T07:49:00+08:00 ] 172.31.16.210 58.17.6.9 GET /
+[ info ] www.w3a.one/ [运行时间：0.042171s][吞吐率：23.71req/s] [内存消耗：4,210.21kb] [文件加载：75]
+[ error ] [8]未定义数组索引: HTTP_ACCEPT_LANGUAGE[/www/wwwroot/www.w3a.one/application/controller/BaseController.php:83]
+---------------------------------------------------------------
+[ 2023-02-11T23:17:01+08:00 ] 172.31.16.210 42.187.206.2 GET /member/member.html
+[ info ] www.w3a.one/member/member.html [运行时间：0.113046s][吞吐率：8.85req/s] [内存消耗：4,500.95kb] [文件加载：75]
+[ error ] [8]未定义数组索引: HTTP_ACCEPT_LANGUAGE[/www/wwwroot/www.w3a.one/application/controller/BaseController.php:83]
+---------------------------------------------------------------
+[ 2023-02-11T23:38:38+08:00 ] 172.31.16.210 42.194.241.91 GET /video/lists.html?orderCode=lastTime&tag_id=0&sub_cid=0&cid=9
+[ info ] www.w3a.one/video/lists.html?orderCode=lastTime&tag_id=0&sub_cid=0&cid=9 [运行时间：0.049968s][吞吐率：20.01req/s] [内存消耗：4,283.59kb] [文件加载：75]
+[ error ] [8]未定义数组索引: HTTP_ACCEPT_LANGUAGE[/www/wwwroot/www.w3a.one/application/controller/BaseController.php:83]

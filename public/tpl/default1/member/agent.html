@@ -1,0 +1,251 @@
+{include file="common/top"}
+<link rel="stylesheet" href="__ROOT__/tpl/mscms/msvodx/css/viewer.min.css">
+<link rel="stylesheet" href="__ROOT__/tpl/mscms/msvodx/css/member.css">
+<script type="application/javascript" charset="utf-8" src="/static/UEditor/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="/static/UEditor/ueditor.all.min.js"></script>
+<script src="__ROOT__/tpl/mscms/msvodx/js/jquery.zclip.min.js"></script>
+
+<!--uper js files-->
+<script type="text/javascript" src="/static/plupload-2.3.6/js/plupload.full.min.js"></script>
+<script type="text/javascript" src="/static/xuploader/webServerUploader.js"></script>
+
+<script type="text/javascript">
+$(function(){
+setTimeout("createWebUploader('logo_btn','','','image',setLogoUrl,false)",500);
+    setTimeout("createWebUploader('logo_mobile_btn','','','image',setLogoUrl1,false)",500); 
+$("#cp-btn").zclip({
+path:'__ROOT__/tpl/mscms/msvodx/js/ZeroClipboard.swf', //记得把ZeroClipboard.swf引入到项目中
+copy:function(){
+return $('#tg-link').val();
+}
+});
+});
+function setLogoUrl(resp){
+    if(resp.filePath!=undefined){
+        $("#site_logo_url").val(resp.filePath);
+        $("#site_logo").attr('src',resp.filePath);
+        layer.msg("{:lang('UploadOk')}");
+    }else{
+        layer.msg("{:lang('UploadFail')}");
+        createWebUploader('logo_btn','','','image',setLogoUrl,false);
+    }
+}
+function setLogoUrl1(resp){
+    if(resp.filePath!=undefined){
+        $("#site_logo_mobile_url").val(resp.filePath);
+        $("#site_logo_mobile").attr('src',resp.filePath);
+        //editUserInfo('headimgurl',resp.filePath);
+        layer.msg("{:lang('UploadOk')}");
+    }else{
+        layer.msg("{:lang('UploadFail')}");
+        createWebUploader('logo_mobile_btn','','','image',setLogoUrl,false);
+    }
+}
+function agent_apply() {
+var url = "{:url('api/agentApply')}";
+$.post(url, {}, function (data) {
+if (data.resultCode == 0) {
+layer.msg(data.message, {time: 1000, icon: 1}, function() {
+location.reload();
+});
+} else {
+layer.msg(data.error, {icon: 2, anim: 6, time: 1000});
+}
+}, 'JSON');
+
+}
+</script>
+
+<div class="s-body">
+<div class="content">
+<!--左边选择-->
+{include file="member/common"}
+<!--右边内容-->
+<div class="M-content">
+{if condition="$is_agent neq 1"}
+<!--代理申请-->
+<div class="apply">
+<p class="title">{:lang('AgentReg')}</p>
+<p>{:lang('DearUser')}<b> {:session('member_info')['nickname']}</b>，{:lang('Agent1')}</p>
+<p>
+{if condition="$status neq 3"}
+{:lang('AgentRegS')}：
+{if condition="$status eq 0"}
+<span class="adopt">{:lang('Audit')}......</span>
+{elseif condition="$status eq 2"/}
+<span class="adopt">{:lang('Refuse')}......</span>
+{/if}
+{/if}
+</p>
+<a  onclick="agent_apply()"  {if condition="$status neq 3"}{else/}class="apply-btn" {/if}>{:lang('Agent2')}</a><!-- class="apply-btn"-->
+</div>
+{else/}
+<!--代理申请结束-->
+<form action="" method="post" id="myform1">
+<!--我的站点SEO设置-->
+<div class="set-up">
+<p class="title">{:lang('UserAgent')}</p>
+<div class="set-box">
+<p><label>{:lang('AgentUrl')}</label>
+<input type="text"  id="tg-link" class="extension" onmouseover="this.select();" readonly="readonly" value="{$agentDomain}" >
+<button id="cp-btn" type="button" class="exten-btn" style="height:32px;margin-left:-60px;">{:lang('Copy')}</button>
+</p>
+    <p style="position: relative"><label>{:lang('BdDomain')}</label>
+        <input type="text"   class="domain_name" name="domain_name" placeholder="{:lang('BdDomain1')}"  value="{$agent_config['domain_name']['webhost']|default=''}" >
+        <span class="status" style=" position: absolute;right: 0px;top:36px;width: 60px;text-align:center;height: 32px;line-height: 32px;background: blue;color: #fff">
+             {if condition="$agent_config['domain_name']['status'] eq 1"}
+            {:lang('OperantY')}
+            {else/}
+            {:lang('OperantN')}
+            {/if}
+        </span>
+    </p>
+<script>
+$(function(){
+$("#cp-btn").zclip({
+path:'__ROOT__/tpl/mscms/msvodx/js/ZeroClipboard.swf',
+copy:function(){
+return $('#tg-link').val();
+}
+});
+});
+</script>
+
+<p><label>{:lang('WebTitle')}</label><input type="text" name="site_title" placeholder="{:lang('WebTitle1')}" value="{$agent_config['site_title']|default=''}" /></p>
+<p><label>{:lang('WebKey')}</label><input type="text" name="site_keywords" placeholder="{:lang('WebKey1')}" value="{$agent_config['site_keywords']|default=''}"  /></p>
+<p><label>{:lang('Webdesc')}</label><input type="text" name="site_description" placeholder="{:lang('Webdesc1')}" value="{$agent_config['site_description']|default=''}" /></p>
+<style type="text/css">
+.webLogo{
+    margin-top:30px;
+    border-top-left-radius:5px;
+    border-top-right-radius:5px;
+    padding:10px 0 0 10px;
+    border:1px solid #e2e2e2;
+    border-bottom:none;
+}
+.mobileLogo{
+    border-bottom-left-radius:5px;
+    border-bottom-right-radius:5px;
+    padding:20px 0 10px 10px;
+    border:1px solid #e2e2e2;
+    border-top:none;
+}
+</style>
+<p class="webLogo" style="margin-bottom:0px;">
+    <label>{:lang('WebLogo')}</label>
+    <a class="layui-btn" id="logo_btn" value="" style="margin-right:15px;width: 105px;float: left;">{:lang('UptLogo')}</a>
+    <img id="site_logo" src="{$agent_config['site_logo']|default=''}" style="height:36px;display:block;border-radius:5px;border:1px solid #ccc;max-width: 200px;">
+    <input name="site_logo" id="site_logo_url"  type="hidden" value="{$agent_config['site_logo']|default=''}">
+</p>
+<p class="mobileLogo">
+    <label>{:lang('MobileLogo')}</label>
+    <a  class="layui-btn" id="logo_mobile_btn" value="" style="margin-right:15px;width:105px;float:left;">{:lang('UptLogo')}</a>
+    <img id="site_logo_mobile" src="{$agent_config['site_logo_mobile']|default=''}" style="height:36px;display:block;border-radius:5px;border:1px solid #ccc;max-width:200px;">
+    <input name="site_logo_mobile" id="site_logo_mobile_url"  type="hidden" value="{$agent_config['site_logo_mobile']|default=''}">
+    <a class="submit" onclick="$('#myform1').submit()" style="background:#3b9eff;right:10px;bottom:15px;" >{:lang('Save')}</a>
+</p>
+</div>
+</div>
+</form>
+{/if}
+<!--seo设置结束-->
+    <div class="apply" style="margin-top:-40px;">
+        <p class="title">{:lang('AgentRel')}</p>
+        <table border="1" class="distribution_table">
+            <tr>
+                <th width="130" style="min-width:130px;"><b>{:lang('Level')}</b></th>
+                <th width="780"><b>{:lang('UserAcc')}</b></th>
+            </tr>
+            <tr>
+                <td >{:lang('UserPre')}</td>
+                <td width="780">{notempty name="pid"}{$puserinfo['username']}{else/}{:lang('NotPre')}{/notempty}</td>
+            </tr>
+            {if condition="$is_agent eq 1"}
+            <?php
+                $userarr = '';
+                for ($i=1; $i <= 3; $i++) { 
+                    foreach (array_column($list[$i], 'username') as $k => $v) {
+                        if(empty($v)){
+                            $userarr .= lang('UnNickName').'，';
+                        }else{
+                            $userarr .= $v.'，';
+                        }
+                    }
+                    switch ($i) {
+                        case '1':
+                            $user1 = rtrim($userarr, '，');
+                            break;
+                        case '2':
+                            $user2 = rtrim($userarr, '，');
+                            break;
+                        default:
+                            $user3 = rtrim($userarr, '，');
+                            break;
+                    }
+                    $userarr = '';
+                }
+            ?>
+            <tr>
+                <td>{:lang('AgentOne')}（{$list[1]|count}）<br><i>{:lang('XoAgent')}</i></td>
+                <td width="780">
+                    {if condition="$user1"}
+                        {$user1}
+                    {else/}
+                        {:lang('None')}
+                    {/if}
+                </td>
+            </tr>
+            <tr>
+                <td>{:lang('AgentTwo')}（{$list[2]|count}）<br><i>{:lang('XtAgent')}</i></td>
+                <td  width="780">
+                    {if condition="$user2"}
+                        {$user2}
+                    {else/}
+                        {:lang('None')}
+                    {/if}
+                </td>
+            </tr>
+            <tr>
+                <td>{:lang('AgentThr')}（{$list[3]|count}）<br><i>{:lang('XsAgent')}</i></td>
+                <td width="780">
+                    {if condition="$user3"}
+                        {$user3}
+                    {else/}
+                        {:lang('None')}
+                    {/if}
+                </td>
+            </tr>
+            {/if}
+        </table>
+    </div>
+
+<!--代理权益-->
+<div class="agent" style="margin-top:-30px;">
+<p class="title">{:lang('AgentAuth')}</p>
+<div class="picBox">
+<div class="img-cel">
+<div>
+<img src="/static/images/myself_domain.png" />
+</div>
+<span>{:lang('AgentAuth1')}</span>
+</div>
+<div class="img-cel">
+<div>
+<img src="/static/images/myself_seo.png" />
+</div>
+<span>{:lang('AgentAuth2')}</span>
+</div>
+<div class="img-cel">
+<div>
+<img src="/static/images/myself_moey.png" />
+</div>
+<span>{:lang('AgentAuth3')}</span>
+</div>
+</div>
+</div>
+<!--代理权益结束-->
+</div>
+</div>
+</div>
+
+{include file="common/footer"}

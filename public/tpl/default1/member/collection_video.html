@@ -1,0 +1,71 @@
+{include file="common/top"}
+<link rel="stylesheet" href="__ROOT__/tpl/mscms/msvodx/css/viewer.min.css">
+<script type="application/javascript" charset="utf-8" src="/static/UEditor/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="/static/UEditor/ueditor.all.min.js"></script>
+
+<div class="s-body">
+    <div class="content">
+        <!--左边选择--> 
+        {include file="member/common"}
+        <!--右边内容-->
+        <div class="M-content">
+            <div class="M-info">
+                <!--我的收藏-->
+                <div class="block my-collection">
+                    <div class="tab">
+                        <a href="{:url('member/collection_video')}" class="cur">{:lang('Video')}</a>
+                        <a href="{:url('member/collection_novel')}">{:lang('Novel')}</a>
+                        <a href="{:url('member/collection_img')}">{:lang('Images')}</a>
+                    </div>
+                    <div class="details-box">
+                        <div style="display: block" class="video">
+                            <div class="mod-row">
+                                {notempty name="video_info"}
+                                {volist name="video_info" id="v"}
+                                <div class="mod-col">
+                                    <a href="{:url('video/play',['id'=>$v['video_id']])}" target="_blank">
+                                        <div class="view-layer">
+                                            <img src="{$v['thumbnail']}">
+                                            <p>{$v['play_time']}</p>
+                                            <div class="play-bg"><span><i></i></span></div>
+                                        </div>
+                                    </a>
+                                    <p class="col-title">{$v['title']}</p>
+                                    <div class="subtitle">
+                                        <i class="btn fn-bofang1" style="font-size:14px;"></i>{$v['click']}
+                                        <var><i class="btn fn-zan2" style="font-size:14px;"></i>{$v['good']}</var>
+                                        <span title="{:lang('Delete')}" onclick="delcolect({$v['id']},'video')"><i class="btn fn-shanchu" style="font-size:14px;"></i></span>
+                                    </div>
+                                </div>
+                                {/volist}
+                                {else/}
+                                <div class="not-comment not">{:lang('NoVdoData')}</div>
+                                {/notempty}
+                            </div>
+                            <div class="sort-pager">{$page}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        $(".select-box li").click(function () {
+            $(".select-box li").removeClass("on");
+            $(this).addClass("on");
+
+            var $t = $(this).attr("data-for");
+            $(".M-info").find("." + $t).show().siblings().hide();
+        });
+        $(".my-collection .tab span").click(function () {
+            $(".my-collection .tab span").removeClass("cur");
+            $(this).addClass("cur");
+
+            var $t = $(this).attr("data-for");
+            $(".M-info .details-box").find("." + $t).show().siblings().hide();
+        });
+    });
+</script>
+{include file="common/bottom"}

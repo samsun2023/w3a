@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<!-- <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" id="vp"> -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+<title>{$html['title']}</title>
+
+<link rel="stylesheet" href="__ROOT__/tpl/appapi/css/common.css?v=1">
+<link rel="stylesheet" href="__ROOT__/tpl/appapi/css/base.css">
+<!-- fonticon -->
+<link rel="stylesheet" href="__ROOT__/static/font/css/font-awesome.min.css">
+<!-- fonticon -->
+<script src="__ROOT__/tpl/appapi/js/jquery.min.js"></script>
+<script src="__ROOT__/tpl/appapi/js/common.js"></script>
+<script src="__ROOT__/tpl/appapi/js/iscroll-probe.js"></script>
+
+<style> 
+	body{ background:#a95af2; display:flex; flex-direction:column; }
+	#wrapper{ flex:1; overflow:hidden; }
+	p{ margin:0;padding:0; }
+	/* ul{ background: #fff; font-size:.4rem; position:relative; } */
+	.pullDown{ position:absolute; top:-1.25rem; left:0; width:100%; z-index:100; }
+	.pullUp{ position:absolute; bottom:-1.25rem; left:0; width:100%; z-index:100; }
+	/* li{ line-height:.46875rem; padding:.3125rem; color:#000; } */
+	img{width:auto;height:auto;max-width:100%;max-height:100%;}
+</style>
+
+<script>
+	//var wd = document.documentElement.clientWidth*window.devicePixelRatio/20;
+	//document.getElementsByTagName("html")[0].style.fontSize = wd + "px";
+	//var scale = 1/window.devicePixelRatio;
+	//var mstr = 'initial-scale='+ scale +', maximum-scale='+ scale +', minimum-scale='+ scale +', user-scalable=no';
+	//document.getElementById("vp").content = mstr; 
+	
+</script>
+
+</head>
+<body>
+<div id="wrapper">
+	<div>
+		<p class="pullDown" style="text-align:center; font-size:14px; line-height:0.05rem;color: #fff;height:60px;">
+			<i class="fa fa-arrow-down" aria-hidden="true"></i> 下拉刷新</p>
+		<ul class="dataLine">
+			<li style="background:{$html['color']|default='#fff'};">
+				<div id="content">{$html['content']}</div>
+			</li>
+		</ul>
+	</div>
+</div>
+<script>
+	var t = $('#content').height();
+	var p = $(window).height();
+	if(t < p){
+		$('#content').css('height',p+30);
+	}
+	var myScroll;
+	myScroll = new IScroll('#wrapper', {
+		probeType: 2,
+		fadeScrollbars: false
+	});
+
+	var pullDown = 1;     // 下拉刷新避免多次执行
+	var downHeight = $(".pullDown").height();
+
+	myScroll.on('scroll', function(){
+		var y = myScroll.y;
+		
+		//console.log($(window).height());
+		// 下拉刷新
+		if(y >= downHeight && pullDown){
+			$(".pullDown").addClass("refresh").html('<i class="fa fa-arrow-up" aria-hidden="true"></i> 释放刷新');
+			myScroll.minScrollY = downHeight;
+			pullDown = 0;
+		}    
+		if(y <= downHeight && y >= 0 && !pullDown){
+			$(".pullDown").removeClass("refresh").html('<i class="fa fa-arrow-down" aria-hidden="true"></i> 下拉刷新');
+			pullDown = 1;
+			myScroll.minScrollY = 0;
+		}
+	});
+
+	myScroll.on('scrollEnd', function(){
+		if($(".pullDown").hasClass("refresh")){
+			$(".pullDown").html('<i class="fa fa-spinner fa-pulse fa-fw margin-bottom"></i> 正在更新中...');
+			//common.loadingShow();
+			//setTimeout(function(){
+				location.reload();
+			//}, 50000);
+		}
+	});
+</script>
+
+</body>
+</html>

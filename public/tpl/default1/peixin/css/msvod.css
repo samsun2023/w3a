@@ -1,0 +1,22 @@
+﻿@charset "UTF-8";
+
+
+@media screen and (max-width: 1435px) {
+    #wrap .news-cont{width: auto;}
+    #wrap .software-lesson .lesson-item{
+        width: 98%;
+    }
+}
+.comment-section .user-info .comment-Reply{
+    display: inline-block;
+    width: 23px;
+    height: 20px;
+    background: url(../images/reply.png) no-repeat;
+    background-size: 100% auto;
+    vertical-align: middle;
+    cursor: pointer;
+}
+.comment-section .user-info .comment-Reply:hover{
+    background: url(../images/reply_c.png) no-repeat;
+    background-size: 100% auto;
+}

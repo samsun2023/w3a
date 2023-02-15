@@ -1,0 +1,93 @@
+{include file="common/top"}
+<link rel="stylesheet" href="__ROOT__/tpl/mscms/msvodx/css/member.css">
+<style>
+    h2{font-weight: bold;padding-bottom: 30px;}
+</style>
+
+<div class="s-body">
+    <div class="content">
+        <!--左边选择--> 
+        {include file="member/common"}
+        <!--右边内容-->
+        <div class="M-content">
+            <div class="M-info">
+                <div class="card-box">
+                    <h2>{:lang('CardPay')}</h2>
+                    <div class="card">
+                        <p><label>{:lang('CardNumber')}：</label><input type="text" id="card_number"/></p>
+                        <p><label>{:lang('VerifyCode')}：</label><input type="text" class="code" id="verifyCodeGetCardInfo" name="verifyCodeGetCardInfo">
+                            <img src="{:url('api/getCaptcha')}" onclick="this.src='{:url(\'api/getCaptcha\')}?'+Math.random()" id="verifyCodeImgGetCardInfo" />
+                        </p>
+                    </div>
+                    <button onclick="getinfo()">{:lang('Query')}</button>
+                    <span style="font-weight: normal;margin-left: 10px;font-size: 14px;">( {:lang('Card1')}<a  target="_blank" href="{$seo['buy_cardpassword_uri']}" style="text-decoration: underline;color: #3b9eff;">{:lang('Card2')}</a> )</span>
+                </div>
+                <div id="card_info" style="display:none;border:1px solid #e2e2e2;padding:20px;border-radius:5px;">
+                    <h2>{:lang('CardInfo')}</h2>
+                    <div class="card-info" style="width:93%">
+                        <p><label>{:lang('CardInfo1')}</label>{:lang('Unknown')}</p>
+                        <p><label>{:lang('CardInfo2')}</label>{:lang('None')}</p>
+                        <p><label>{:lang('CardInfo3')}</label>{:lang('Unknown')}</p>
+                        <p><label>{:lang('CardInfo4')}</label>{:lang('None')}</p>
+                        <p><label>{:lang('CardInfo5')}</label>{:lang('Unknown')}</p>
+                        <div style="border-top:1px solid #e2e2e2;margin-top:20px;"></div> 
+                        <a style="margin:20px 0 0 100px;">{:lang('Recharge')}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <input type="hidden" id="card_id"/>
+    </div>
+</div>
+<script>
+    function  use_card() {
+        var card_number = $('#card_number').val();
+        var card_id = $('#card_id').val();
+        var url = "{:url('api/use_card_password')}";
+        $.post(url, {card_number: card_number,id:card_id}, function (data) {
+            if (data.statusCode == 0) {
+                layer.msg("{:lang('RechargeOk')}", {icon: 1, anim: 2, time: 1000},function(){
+                    window.location.href = "{:url('member/member')}";
+                });
+            } else {
+                layer.msg(data.error, {icon: 2, anim: 6, time: 1000});
+            }
+        }, 'JSON');
+    }
+    function getinfo(){
+        var verifyCode = $('#verifyCodeGetCardInfo').val();
+        var card_number = $('#card_number').val();
+        var url = "{:url('api/get_card_password_info')}";
+        $.post(url, {card_number: card_number,verifyCode:verifyCode}, function (data) {
+            if (data.statusCode == 0) {
+                data = data.data;
+                var html = '';
+                if(data.card_type == 1){
+                    html +='<p><label>'+"{:lang('CardInfo1')}"+'</label>'+"{:lang('CardVip')}"+'</p>';
+                    var vip_time = (data.vip_time == 999999999) ? "{:lang('PerVip')}" :  data.vip_time+"{:lang('Days')}";
+                    html +='<p><label>'+"{:lang('CardInfo2')}"+'</label>'+vip_time+'</p>';
+                }else{
+                    html +='<p><label>'+"{:lang('CardInfo1')}"+'</label>'+"{:lang('CardGold')}"+'</p>';
+                    html +='<p><label>'+"{:lang('CardInfo6')}"+'</label>'+data.gold+"{:lang('Single')}"+'</p>';
+                }
+                html +='<p><label>'+"{:lang('CardInfo3')}"+'</label>￥'+data.price+'</p>';
+                html +='<p><label>'+"{:lang('CardInfo4')}"+'</label>'+data.out_times+'</p>';
+                if(data.status == 1){
+                    html +='<p><label>'+"{:lang('CardInfo5')}"+'</label>'+"{:lang('YesUse')}"+'</p>';
+                }else{
+                    html +='<p><label>'+"{:lang('CardInfo5')}"+'</label>'+"{:lang('NotUse')}"+'</p>';
+                }
+                html += '<div style="border-top:1px solid #e2e2e2;margin-top:20px;"></div>'
+                html +='<a onclick="use_card()" style="margin:20px 0 0 100px;">'+"{:lang('Recharge')}"+'</a>';
+                $('#card_id').val(data.id);
+                $('.card-info').html(html);
+                $('#card_info').show('slow');
+            } else {
+                layer.msg(data.error, {icon: 2, anim: 6, time: 1000});
+                $('#card_info').hide('slow');
+                $("#verifyCodeImgGetCardInfo").click();
+            }
+        }, 'JSON');
+    }
+</script>
+{include file="common/bottom"}

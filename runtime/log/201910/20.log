@@ -1,0 +1,36 @@
+---------------------------------------------------------------
+[ 2019-10-20T01:04:26+08:00 ] 202.146.217.90 165.22.106.100 GET /
+[ info ] 56tv.vip/ [运行时间：0.149110s][吞吐率：6.71req/s] [内存消耗：3,132.02kb] [文件加载：70]
+[ error ] [8]未定义数组索引: HTTP_ACCEPT_LANGUAGE[/www/wwwroot/56tv.vip/application/controller/BaseController.php:83]
+---------------------------------------------------------------
+[ 2019-10-20T02:10:26+08:00 ] 202.146.217.90 138.197.13.103 GET /
+[ info ] 56tv.vip/ [运行时间：0.119317s][吞吐率：8.38req/s] [内存消耗：3,132.02kb] [文件加载：70]
+[ error ] [8]未定义数组索引: HTTP_ACCEPT_LANGUAGE[/www/wwwroot/56tv.vip/application/controller/BaseController.php:83]
+---------------------------------------------------------------
+[ 2019-10-20T03:14:29+08:00 ] 202.146.217.90 51.77.158.252 GET /
+[ info ] 56tv.vip/ [运行时间：0.141264s][吞吐率：7.08req/s] [内存消耗：3,132.02kb] [文件加载：70]
+[ error ] [8]未定义数组索引: HTTP_ACCEPT_LANGUAGE[/www/wwwroot/56tv.vip/application/controller/BaseController.php:83]
+---------------------------------------------------------------
+[ 2019-10-20T06:35:23+08:00 ] 202.146.217.90 107.6.63.120 GET /
+[ info ] 56tv.vip/ [运行时间：0.119371s][吞吐率：8.38req/s] [内存消耗：3,132.02kb] [文件加载：70]
+[ error ] [8]未定义数组索引: HTTP_ACCEPT_LANGUAGE[/www/wwwroot/56tv.vip/application/controller/BaseController.php:83]
+---------------------------------------------------------------
+[ 2019-10-20T07:14:31+08:00 ] 202.146.217.90 157.55.39.237 GET /
+[ info ] 56tv.vip/ [运行时间：0.145645s][吞吐率：6.87req/s] [内存消耗：3,132.35kb] [文件加载：70]
+[ error ] [8]未定义数组索引: HTTP_ACCEPT_LANGUAGE[/www/wwwroot/56tv.vip/application/controller/BaseController.php:83]
+---------------------------------------------------------------
+[ 2019-10-20T07:41:21+08:00 ] 202.146.217.90 104.192.74.21 GET /
+[ info ] www.56tv.vip/ [运行时间：0.139996s][吞吐率：7.14req/s] [内存消耗：3,129.74kb] [文件加载：70]
+[ error ] [8]未定义数组索引: HTTP_ACCEPT_LANGUAGE[/www/wwwroot/56tv.vip/application/controller/BaseController.php:83]
+---------------------------------------------------------------
+[ 2019-10-20T07:44:43+08:00 ] 202.146.217.90 82.196.3.212 GET /
+[ info ] 56tv.vip/ [运行时间：0.125010s][吞吐率：8.00req/s] [内存消耗：3,132.02kb] [文件加载：70]
+[ error ] [8]未定义数组索引: HTTP_ACCEPT_LANGUAGE[/www/wwwroot/56tv.vip/application/controller/BaseController.php:83]
+---------------------------------------------------------------
+[ 2019-10-20T08:57:25+08:00 ] 202.146.217.90 95.142.66.221 GET /
+[ info ] 56tv.vip/ [运行时间：0.122861s][吞吐率：8.14req/s] [内存消耗：3,132.02kb] [文件加载：70]
+[ error ] [8]未定义数组索引: HTTP_ACCEPT_LANGUAGE[/www/wwwroot/56tv.vip/application/controller/BaseController.php:83]
+---------------------------------------------------------------
+[ 2019-10-20T10:11:54+08:00 ] 202.146.217.90 159.89.126.252 GET /homepage/index/uid/2015
+[ info ] 56tv.vip/homepage/index/uid/2015 [运行时间：0.160064s][吞吐率：6.25req/s] [内存消耗：3,142.92kb] [文件加载：70]
+[ error ] [8]未定义数组索引: HTTP_ACCEPT_LANGUAGE[/www/wwwroot/56tv.vip/application/controller/BaseController.php:83]

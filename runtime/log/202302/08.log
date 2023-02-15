@@ -1,0 +1,84 @@
+---------------------------------------------------------------
+[ 2023-02-08T08:22:08+08:00 ] 172.31.16.210 45.32.51.164 GET /
+[ info ] www.w3a.one/ [运行时间：0.102445s][吞吐率：9.76req/s] [内存消耗：4,212.91kb] [文件加载：75]
+[ error ] [8]未定义数组索引: HTTP_ACCEPT_LANGUAGE[/www/wwwroot/www.w3a.one/application/controller/BaseController.php:83]
+---------------------------------------------------------------
+[ 2023-02-08T08:22:37+08:00 ] 172.31.16.210 51.81.167.146 GET /
+[ info ] www.w3a.one/ [运行时间：0.059323s][吞吐率：16.86req/s] [内存消耗：4,207.54kb] [文件加载：75]
+[ error ] [8]未定义数组索引: HTTP_ACCEPT_LANGUAGE[/www/wwwroot/www.w3a.one/application/controller/BaseController.php:83]
+---------------------------------------------------------------
+[ 2023-02-08T08:22:45+08:00 ] 172.31.16.210 51.75.169.50 GET /
+[ info ] www.w3a.one/ [运行时间：0.041719s][吞吐率：23.97req/s] [内存消耗：4,207.59kb] [文件加载：75]
+[ error ] [8]未定义数组索引: HTTP_ACCEPT_LANGUAGE[/www/wwwroot/www.w3a.one/application/controller/BaseController.php:83]
+---------------------------------------------------------------
+[ 2023-02-08T08:23:32+08:00 ] 172.31.16.210 39.110.218.101 GET /
+[ info ] www.w3a.one/ [运行时间：0.077724s][吞吐率：12.87req/s] [内存消耗：4,276.58kb] [文件加载：75]
+[ error ] [0]模板文件不存在:./tpl/peixun/mobile/index/index.html[/www/wwwroot/www.w3a.one/thinkphp/library/think/view/driver/Think.php:80]
+---------------------------------------------------------------
+[ 2023-02-08T08:23:53+08:00 ] 172.31.16.210 139.59.159.130 GET /
+[ info ] www.w3a.one/ [运行时间：0.039681s][吞吐率：25.20req/s] [内存消耗：4,207.38kb] [文件加载：75]
+[ error ] [8]未定义数组索引: HTTP_ACCEPT_LANGUAGE[/www/wwwroot/www.w3a.one/application/controller/BaseController.php:83]
+---------------------------------------------------------------
+[ 2023-02-08T08:23:57+08:00 ] 172.31.16.210 139.59.159.130 GET /
+[ info ] www.w3a.one/ [运行时间：0.066269s][吞吐率：15.09req/s] [内存消耗：4,207.87kb] [文件加载：75]
+[ error ] [8]未定义数组索引: HTTP_ACCEPT_LANGUAGE[/www/wwwroot/www.w3a.one/application/controller/BaseController.php:83]
+---------------------------------------------------------------
+[ 2023-02-08T08:23:57+08:00 ] 172.31.16.210 139.59.159.130 GET /?rest_route=/wp/v2/users/
+[ info ] www.w3a.one/?rest_route=/wp/v2/users/ [运行时间：0.066279s][吞吐率：15.09req/s] [内存消耗：4,208.47kb] [文件加载：75]
+[ error ] [8]未定义数组索引: HTTP_ACCEPT_LANGUAGE[/www/wwwroot/www.w3a.one/application/controller/BaseController.php:83]
+---------------------------------------------------------------
+[ 2023-02-08T08:24:01+08:00 ] 172.31.16.210 195.74.76.198 HEAD /
+[ info ] www.w3a.one/ [运行时间：0.037114s][吞吐率：26.94req/s] [内存消耗：4,207.60kb] [文件加载：75]
+[ error ] [8]未定义数组索引: HTTP_ACCEPT_LANGUAGE[/www/wwwroot/www.w3a.one/application/controller/BaseController.php:83]
+---------------------------------------------------------------
+[ 2023-02-08T08:24:38+08:00 ] 172.31.16.210 179.43.169.181 GET /
+[ info ] www.w3a.one/ [运行时间：0.039716s][吞吐率：25.18req/s] [内存消耗：4,212.66kb] [文件加载：75]
+[ error ] [8]未定义数组索引: HTTP_ACCEPT_LANGUAGE[/www/wwwroot/www.w3a.one/application/controller/BaseController.php:83]
+---------------------------------------------------------------
+[ 2023-02-08T08:25:50+08:00 ] 172.31.16.210 179.43.169.181 GET /
+[ info ] www.w3a.one/ [运行时间：0.040035s][吞吐率：24.98req/s] [内存消耗：4,212.66kb] [文件加载：75]
+[ error ] [8]未定义数组索引: HTTP_ACCEPT_LANGUAGE[/www/wwwroot/www.w3a.one/application/controller/BaseController.php:83]
+---------------------------------------------------------------
+[ 2023-02-08T08:26:26+08:00 ] 172.31.16.210 167.248.133.60 GET /
+[ info ] www.w3a.one/ [运行时间：0.040705s][吞吐率：24.57req/s] [内存消耗：4,207.69kb] [文件加载：75]
+[ error ] [8]未定义数组索引: HTTP_ACCEPT_LANGUAGE[/www/wwwroot/www.w3a.one/application/controller/BaseController.php:83]
+---------------------------------------------------------------
+[ 2023-02-08T08:26:26+08:00 ] 172.31.16.210 167.248.133.60 GET /
+[ info ] www.w3a.one/ [运行时间：0.041505s][吞吐率：24.09req/s] [内存消耗：4,207.69kb] [文件加载：75]
+[ error ] [8]未定义数组索引: HTTP_ACCEPT_LANGUAGE[/www/wwwroot/www.w3a.one/application/controller/BaseController.php:83]
+---------------------------------------------------------------
+[ 2023-02-08T08:52:35+08:00 ] 172.31.16.210 51.75.169.50 GET /
+[ info ] www.w3a.one/ [运行时间：0.039373s][吞吐率：25.40req/s] [内存消耗：4,213.05kb] [文件加载：75]
+[ error ] [8]未定义数组索引: HTTP_ACCEPT_LANGUAGE[/www/wwwroot/www.w3a.one/application/controller/BaseController.php:83]
+---------------------------------------------------------------
+[ 2023-02-08T10:22:23+08:00 ] 172.31.16.210 133.242.174.119 GET /
+[ info ] www.w3a.one/ [运行时间：0.152712s][吞吐率：6.55req/s] [内存消耗：4,275.87kb] [文件加载：75]
+[ error ] [0]模板文件不存在:./tpl/peixun/mobile/index/index.html[/www/wwwroot/www.w3a.one/thinkphp/library/think/view/driver/Think.php:80]
+---------------------------------------------------------------
+[ 2023-02-08T10:22:28+08:00 ] 172.31.16.210 133.242.140.127 GET /
+[ info ] www.w3a.one/ [运行时间：0.052616s][吞吐率：19.01req/s] [内存消耗：4,270.57kb] [文件加载：75]
+[ error ] [0]模板文件不存在:./tpl/peixun/mobile/index/index.html[/www/wwwroot/www.w3a.one/thinkphp/library/think/view/driver/Think.php:80]
+---------------------------------------------------------------
+[ 2023-02-08T11:23:33+08:00 ] 172.31.16.210 34.254.53.125 GET /
+[ info ] www.w3a.one/ [运行时间：0.049281s][吞吐率：20.29req/s] [内存消耗：4,212.88kb] [文件加载：75]
+[ error ] [8]未定义数组索引: HTTP_ACCEPT_LANGUAGE[/www/wwwroot/www.w3a.one/application/controller/BaseController.php:83]
+---------------------------------------------------------------
+[ 2023-02-08T11:23:34+08:00 ] 172.31.16.210 34.254.53.125 GET /
+[ info ] www.w3a.one/ [运行时间：0.039848s][吞吐率：25.10req/s] [内存消耗：4,207.44kb] [文件加载：75]
+[ error ] [8]未定义数组索引: HTTP_ACCEPT_LANGUAGE[/www/wwwroot/www.w3a.one/application/controller/BaseController.php:83]
+---------------------------------------------------------------
+[ 2023-02-08T12:16:01+08:00 ] 172.31.16.210 8.219.87.134 GET /
+[ info ] www.w3a.one/ [运行时间：0.060953s][吞吐率：16.41req/s] [内存消耗：4,280.38kb] [文件加载：75]
+[ error ] [0]模板文件不存在:./tpl/peixun/index/index.html[/www/wwwroot/www.w3a.one/thinkphp/library/think/view/driver/Think.php:80]
+---------------------------------------------------------------
+[ 2023-02-08T12:16:05+08:00 ] 172.31.16.210 8.219.87.134 GET /
+[ info ] www.w3a.one/ [运行时间：0.055595s][吞吐率：17.99req/s] [内存消耗：4,275.23kb] [文件加载：75]
+[ error ] [0]模板文件不存在:./tpl/peixun/index/index.html[/www/wwwroot/www.w3a.one/thinkphp/library/think/view/driver/Think.php:80]
+---------------------------------------------------------------
+[ 2023-02-08T12:17:10+08:00 ] 172.31.16.210 8.219.87.134 GET /
+[ info ] www.w3a.one/ [运行时间：0.056808s][吞吐率：17.60req/s] [内存消耗：4,280.44kb] [文件加载：75]
+[ error ] [0]模板文件不存在:./tpl/peixun/index/index.html[/www/wwwroot/www.w3a.one/thinkphp/library/think/view/driver/Think.php:80]
+---------------------------------------------------------------
+[ 2023-02-08T20:32:22+08:00 ] 172.31.16.210 47.88.94.28 GET /
+[ info ] www.w3a.one/ [运行时间：0.048999s][吞吐率：20.41req/s] [内存消耗：4,215.35kb] [文件加载：75]
+[ error ] [8]未定义数组索引: HTTP_ACCEPT_LANGUAGE[/www/wwwroot/www.w3a.one/application/controller/BaseController.php:83]

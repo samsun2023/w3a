@@ -1,0 +1,16 @@
+---------------------------------------------------------------
+[ 2023-02-15T06:07:46+08:00 ] 172.31.16.210 124.221.186.82 GET /
+[ info ] www.w3a.one:443/ [运行时间：0.057169s][吞吐率：17.49req/s] [内存消耗：4,215.45kb] [文件加载：75]
+[ error ] [8]未定义数组索引: HTTP_ACCEPT_LANGUAGE[/www/wwwroot/www.w3a.one/application/controller/BaseController.php:83]
+---------------------------------------------------------------
+[ 2023-02-15T06:08:04+08:00 ] 172.31.16.210 124.221.186.82 GET /
+[ info ] www.w3a.one:443/ [运行时间：0.042869s][吞吐率：23.33req/s] [内存消耗：4,210.09kb] [文件加载：75]
+[ error ] [8]未定义数组索引: HTTP_ACCEPT_LANGUAGE[/www/wwwroot/www.w3a.one/application/controller/BaseController.php:83]
+---------------------------------------------------------------
+[ 2023-02-15T06:08:19+08:00 ] 172.31.16.210 124.221.186.82 GET /
+[ info ] www.w3a.one:443/ [运行时间：0.040554s][吞吐率：24.66req/s] [内存消耗：4,210.09kb] [文件加载：75]
+[ error ] [8]未定义数组索引: HTTP_ACCEPT_LANGUAGE[/www/wwwroot/www.w3a.one/application/controller/BaseController.php:83]
+---------------------------------------------------------------
+[ 2023-02-15T06:17:13+08:00 ] 172.31.16.210 124.221.186.82 GET /
+[ info ] www.w3a.one:443/ [运行时间：0.043004s][吞吐率：23.25req/s] [内存消耗：4,215.46kb] [文件加载：75]
+[ error ] [8]未定义数组索引: HTTP_ACCEPT_LANGUAGE[/www/wwwroot/www.w3a.one/application/controller/BaseController.php:83]

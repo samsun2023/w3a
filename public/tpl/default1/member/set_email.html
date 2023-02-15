@@ -1,0 +1,281 @@
+{include file="common/top"}
+<link rel="stylesheet" href="__ROOT__/tpl/mscms/msvodx/css/member.css">
+<link rel="stylesheet" href="__ROOT__/tpl/mscms/msvodx/css/font.css">
+<script>
+    //init vars
+    var timerIndex = null;
+    var curTime = 0;
+    var curMailObj = null;        //当前邮箱地址对象
+    var curGetCodeBtn = null;     //当前获取按钮对象
+    var curVerifyBox = null;      //当前验证码输入框对象
+    var email = "{$memberInfo['email']}";
+    $(function () {
+        $('#getCodeBtn').on('click', step1);
+        $('#getCodeBtnNew').on('click', step2);
+
+
+        $('#saveBindBtn').click(function(){
+            checkCode(true,function(resp){
+                if(resp.resultCode==0){
+                    $('#step2').hide('slow');
+                    $('#step3').show('slow');
+                    clearInterval(timerIndex);
+                }else{
+                    layer.tips(resp.message,curVerifyBox);
+                }
+            });
+        });
+
+        $('#nextStepBtn').click(function(){
+            checkCode(false,function(resp){
+                if(resp.resultCode==0){
+                    $('#step1').hide('slow');
+                    $('#step2').show('slow');
+                    curMailObj=null;
+                    clearInterval(timerIndex);
+                }else{
+                    layer.tips(resp.message,curVerifyBox);
+                }
+
+            });
+        });
+
+        if(email){
+            step1();
+        }else{
+            $('#step1').hide();
+            $('#step2').show();
+            step2();
+        }
+
+    });
+
+    function step1(){
+        curMailObj = $('#email');
+        curGetCodeBtn = $('#getCodeBtn');
+        curVerifyBox = $('#mailVerifyCode');
+        sendCode(false);
+    }
+
+    function step2(){
+        curMailObj = $('#emailNew');
+        curGetCodeBtn = $('#getCodeBtnNew');
+        curVerifyBox = $('#mailVerifyCodeNew');
+        sendCode(true);
+    }
+
+    //timer
+    function timer(isBindNew) {
+        curTime--;
+        if (curTime <= 0) {
+            clearInterval(timerIndex);
+            curGetCodeBtn.html("{:lang('GetCode')}").on('click', function(){
+                if(isBindNew){
+                    step2();
+                }else{
+                    step1();
+                }
+            }).removeClass('sent');
+        }else{
+            curGetCodeBtn.html("{:lang('GetCode')}"+'(' + curTime + "{:lang('Second')}"+')').addClass('sent');
+        }
+    }
+
+    //send code
+    function sendCode(isBindNew) {
+        var pregStr = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
+        var mailUrl=curMailObj.val();
+        if (pregStr.test(mailUrl)) {
+            var url = "{:url('api/member_email_send')}";
+            var postData = {email: mailUrl};
+            if (isBindNew==true) postData.type = 'authNew';
+            var _tmpClick=curGetCodeBtn.click;
+            curGetCodeBtn.unbind();
+            $.post(url, postData, function (resp) {
+                if (resp.resultCode == 0) {
+                    curVerifyBox.focus();
+                    layer.tips("{:lang('SendCodeE')}", curMailObj);
+
+                    curTime = 35;//验证重复获取间隔
+                    curGetCodeBtn.html("{:lang('GetCode')}"+'('+curTime+"{:lang('Second')}"+')').addClass('sent');
+                    timerIndex = setInterval("timer(" + isBindNew + ")", 1000);
+                } else {
+                    layer.tips(resp.message, curMailObj);
+                    curGetCodeBtn.on('click',function(){
+                        if(isBindNew==true){
+                            step2();
+                        }else{
+                            step1();
+                        }
+                    })
+                }
+            }, 'JSON');
+        } else {
+            layer.tips("{:lang('EmailOk')}", curMailObj);
+            return false;
+        }
+    }
+
+    function checkCode(isBindNew,callBack){
+        if(curMailObj==null || curMailObj.val()==''){
+            layer.msg("{:lang('SendCodeB')}");
+            return false;
+        }
+        var url='{:url("api/member_mail_verify_code")}';
+        var postData={code:curVerifyBox.val(),mail:curMailObj.val()};
+        if(isBindNew==true) postData.type='authNew';
+        $.ajax({
+            url:url,
+            type:'POST',
+            dataType:'JSON',
+            data:postData,
+            async:false,
+            success:function(resp){
+                callBack(resp);
+            }
+        });
+    }
+
+</script>
+
+<div id="block-B" class="pp_con_wrap" style="border-radius:15px;">
+    <div class="pp_main fc-main clearfix" id="J_verify-phone">
+        <!--外框架结束-->
+        <div class="top_tips">
+            <i class="pp_icon diamond_gray"></i>
+            {:lang('SeekPwdT')}
+        </div>
+        <!--安全验证-->
+        <div id="step1" class="pp_pw_retakeStep">
+            <div class="retakeStep_wrap">
+                <div class="pp_icon step_bg stepOne">
+                    <div class="step_list">
+                        <ul>
+                            <li class="step_pass">1.{:lang('SeekPwd1')}</li>
+                            <li>2.{:lang('EmailPwd2')}</li>
+                            <li>3.{:lang('SeekPwd3')}</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="step_con">
+                    <form action="">
+                        <div class="pp_account_form_item" style="margin-bottom: 10px;">
+                            {if condition="empty($memberInfo['email']) "}
+                            {:lang('BdEmail1')}
+                            {else/}
+                            {:lang('BdEmail2')}<var>{:hidden_mail_str($memberInfo['email'])}</var>{:lang('BdEmail3')}
+                            {/if}
+                        </div>
+                        <div class="pp_account_form_item">
+                            <span class="vl-inline item_title_big">
+                                <label>{:lang('OldEmail')}：</label>
+                            </span>
+                            <span class="vl-inline item_input">
+                                <input id="email" class="input-common input-common-ph" type="text"
+                                       placeholder="{:lang('SeekAllEml')}">
+                            </span>
+                            <a class="set-warnning" id="getCodeBtn">{:lang('GetCode')}</a><!--发送之后追加class="sent"-->
+                            <!--<span class="error-warnning">邮箱不正确</span>-->
+                        </div>
+                        <div class="pp_account_form_item" style="margin-top:10px;">
+                            <span class="vl-inline item_title_big">
+                                <label>{:lang('SeekCode')}：</label>
+                            </span>
+                            <span class="vl-inline item_input" style="width: 170px;">
+                                <input id="mailVerifyCode" class="input-common input-common-ph" style="width: 150px;"
+                                       type="text" placeholder="{:lang('SeekCode')}">
+                            </span>
+                        </div>
+                        <!--发送验证按钮开始-->
+                        <div class="pp_account_form_item">
+                            <span class="vl-inline item_title_big">
+                                <label for=""></label>
+                            </span>
+                            <span class="vl-inline">
+                             <a id="nextStepBtn" class="pc-btn pc-btn-green" href="javascript:void(0)"
+                                style="width: 150px;margin-top: 25px;">{:lang('SeekStep')}</a>
+                            </span>
+                        </div>
+                        <!--发送验证邮件按钮结束-->
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!--设置新邮箱-->
+        <div id="step2" style="display: none" class="pp_pw_retakeStep">
+            <div class="retakeStep_wrap">
+                <div class="pp_icon step_bg stepTwo">
+                    <div class="step_list">
+                        <ul>
+                            <li class="step_pass">1.{:lang('SeekPwd1')}</li>
+                            <li class="step_pass">2.{:lang('EmailPwd2')}</li>
+                            <li>3.{:lang('SeekPwd3')}</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="step_con">
+                    <form action="">
+                        <div class="pp_account_form_item">
+                            <span class="vl-inline item_title_big">
+                                <label>{:lang('NewEmail')}：</label>
+                            </span>
+                            <span class="vl-inline item_input">
+                                <input id="emailNew" class="input-common input-common-ph" type="text"
+                                       placeholder="{:lang('BdEmail0')}">
+                            </span>
+                            <a class="set-warnning" id="getCodeBtnNew">{:lang('GetCode')}</a>
+                            <!--发送之后"验证码已发送，重新发送(32秒)"追加class="sent"-->
+                            <!--<span class="error-warnning">邮箱不正确</span>-->
+                        </div>
+                        <div class="pp_account_form_item" style="margin-top:10px;">
+                            <span class="vl-inline item_title_big">
+                                <label>{:lang('SeekCode')}：</label>
+                            </span>
+                            <span class="vl-inline item_input" style="width: 170px;">
+                                <input id="mailVerifyCodeNew" class="input-common input-common-ph" style="width: 150px;"
+                                       type="text" placeholder="{:lang('SeekCode')}">
+                            </span>
+                        </div>
+                        <!--发送验证按钮开始-->
+                        <div class="pp_account_form_item">
+                            <span class="vl-inline item_title_big">
+                                <label for=""></label>
+                            </span>
+                            <span class="vl-inline">
+                             <a id="saveBindBtn" class="pc-btn pc-btn-green" href="javascript:void(0)"
+                                style="width: 150px;margin-top: 25px;">{:lang('SeekPwdSmt')}</a>
+                            </span>
+                        </div>
+                        <!--发送验证邮件按钮结束-->
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!--修改成功-->
+        <div id="step3" style="display: none" class="pp_pw_retakeStep">
+            <div class="retakeStep_wrap">
+                <div class="pp_icon step_bg stepThree">
+                    <div class="step_list">
+                        <ul>
+                            <li class="step_pass">1.{:lang('SeekPwd1')}</li>
+                            <li class="step_pass">2.{:lang('EmailPwd2')}</li>
+                            <li class="step_pass">3.{:lang('SeekPwd3')}</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="step_con">
+                    <div class="success_note">
+                        <i class="success_hint_bd btn fn-baocunchenggong" style="font-size:75px;"></i>
+                        <span>{:lang('SeekEmail')}</span><br>
+                        <a href="{:url('member/member')}" style="width:auto;padding:0 15px;">{:lang('BlackUser')}</a>
+                        <a href="/" style="width:auto;padding:0 15px;">{:lang('IndexHome')}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,36 @@
+---------------------------------------------------------------
+[ 2023-02-12T00:00:30+08:00 ] 172.31.16.210 42.187.206.2 GET /novel/lists.html
+[ info ] www.w3a.one/novel/lists.html [运行时间：0.044206s][吞吐率：22.62req/s] [内存消耗：4,219.76kb] [文件加载：75]
+[ error ] [8]未定义数组索引: HTTP_ACCEPT_LANGUAGE[/www/wwwroot/www.w3a.one/application/controller/BaseController.php:83]
+---------------------------------------------------------------
+[ 2023-02-12T00:38:35+08:00 ] 172.31.16.210 42.194.241.91 GET /images/lists.html
+[ info ] www.w3a.one/images/lists.html [运行时间：0.185872s][吞吐率：5.38req/s] [内存消耗：4,230.59kb] [文件加载：75]
+[ error ] [8]未定义数组索引: HTTP_ACCEPT_LANGUAGE[/www/wwwroot/www.w3a.one/application/controller/BaseController.php:83]
+---------------------------------------------------------------
+[ 2023-02-12T01:20:16+08:00 ] 172.31.16.210 175.24.212.154 GET /index/login.html
+[ info ] www.w3a.one/index/login.html [运行时间：0.134689s][吞吐率：7.42req/s] [内存消耗：4,219.19kb] [文件加载：75]
+[ error ] [8]未定义数组索引: HTTP_ACCEPT_LANGUAGE[/www/wwwroot/www.w3a.one/application/controller/BaseController.php:83]
+---------------------------------------------------------------
+[ 2023-02-12T12:57:12+08:00 ] 172.31.16.210 42.187.206.2 GET /index/register.html
+[ info ] www.w3a.one/index/register.html [运行时间：0.044688s][吞吐率：22.38req/s] [内存消耗：4,219.14kb] [文件加载：75]
+[ error ] [8]未定义数组索引: HTTP_ACCEPT_LANGUAGE[/www/wwwroot/www.w3a.one/application/controller/BaseController.php:83]
+---------------------------------------------------------------
+[ 2023-02-12T18:56:20+08:00 ] 172.31.16.210 175.24.212.154 GET /video/lists.html
+[ info ] www.w3a.one/video/lists.html [运行时间：0.046394s][吞吐率：21.55req/s] [内存消耗：4,281.38kb] [文件加载：75]
+[ error ] [8]未定义数组索引: HTTP_ACCEPT_LANGUAGE[/www/wwwroot/www.w3a.one/application/controller/BaseController.php:83]
+---------------------------------------------------------------
+[ 2023-02-12T19:11:11+08:00 ] 172.31.16.210 42.187.206.2 GET /index/login.html
+[ info ] www.w3a.one/index/login.html [运行时间：0.140091s][吞吐率：7.14req/s] [内存消耗：4,219.19kb] [文件加载：75]
+[ error ] [8]未定义数组索引: HTTP_ACCEPT_LANGUAGE[/www/wwwroot/www.w3a.one/application/controller/BaseController.php:83]
+---------------------------------------------------------------
+[ 2023-02-12T19:18:34+08:00 ] 172.31.16.210 175.24.212.154 GET /share/index.html
+[ info ] www.w3a.one/share/index.html [运行时间：0.043970s][吞吐率：22.74req/s] [内存消耗：4,189.01kb] [文件加载：75]
+[ error ] [8]未定义数组索引: HTTP_ACCEPT_LANGUAGE[/www/wwwroot/www.w3a.one/application/controller/BaseController.php:83]
+---------------------------------------------------------------
+[ 2023-02-12T19:21:20+08:00 ] 172.31.16.210 175.24.212.154 GET /video/lists.html?orderCode=lastTime&tag_id=0&sub_cid=0&cid=2
+[ info ] www.w3a.one/video/lists.html?orderCode=lastTime&tag_id=0&sub_cid=0&cid=2 [运行时间：0.045801s][吞吐率：21.83req/s] [内存消耗：4,283.59kb] [文件加载：75]
+[ error ] [8]未定义数组索引: HTTP_ACCEPT_LANGUAGE[/www/wwwroot/www.w3a.one/application/controller/BaseController.php:83]
+---------------------------------------------------------------
+[ 2023-02-12T19:30:28+08:00 ] 172.31.16.210 42.187.206.2 GET /video/lists.html?orderCode=lastTime&tag_id=0&sub_cid=0&cid=61
+[ info ] www.w3a.one/video/lists.html?orderCode=lastTime&tag_id=0&sub_cid=0&cid=61 [运行时间：0.047931s][吞吐率：20.86req/s] [内存消耗：4,283.48kb] [文件加载：75]
+[ error ] [8]未定义数组索引: HTTP_ACCEPT_LANGUAGE[/www/wwwroot/www.w3a.one/application/controller/BaseController.php:83]

@@ -1,0 +1,143 @@
+{include file="common/header"}
+<script src="__ROOT__/tpl/mscms/msvodx/js/jquery.lazyload.js?v=1.9.1"></script>
+<script type="text/javascript" charset="utf-8">
+$(function() {
+$("img.lazy").lazyload({effect: "fadeIn"});
+});
+</script>
+<br>
+<br>
+<br>
+<br>
+<br>
+<div class="container">
+<div class="row">
+<div class="stui-pannel stui-pannel-bg clearfix">
+  <div class="stui-pannel_hd">
+    <ul class="stui-screen__list type-slide bottom-line-dot clearfix" id="class_box">
+      <li> <span class="text-muted">{:lang('Class')}</span> </li>
+      <li class="{empty name="cid"}swiper-slide active{/empty}"><a href="javascript:;" data="0">{:lang('All')}</a></li>
+      {volist name="class_list" id="vo"}
+      <li class="{if condition="$cid eq $vo['id']"}swiper-slide active{/if}"><a data="{$vo['id']}" href="javascript:;">{$vo['name']}</a></li>
+      {/volist}
+    </ul>
+    {notempty name="class_sublist"}
+    <ul class="stui-screen__list type-slide bottom-line-dot clearfix" id="sub_box">
+      <li> <span class="text-muted">{:lang('SubClass')}</span> </li>
+      <li class="{empty name="sub_cid"}swiper-slide active{/empty}"><a href="javascript:;" data="0">{:lang('All')}</a></li>
+      {volist name="class_sublist" id="vo"}
+      <li class="{if condition="$sub_cid eq $vo['id']"}swiper-slide active{/if}"><a data="{$vo['id']}" href="javascript:;">{$vo['name']}</a></li>
+      {/volist}
+    </ul>
+    {/notempty}
+    <ul class="stui-screen__list type-slide bottom-line-dot clearfix" id="tag_box">
+      <li> <span class="text-muted">{:lang('Tag')}</span> </li>
+      <li class="{empty name="tag_id"}swiper-slide active{/empty}"><a href="javascript:;" data="0">{:lang('All')}</a></li>
+      {volist name="tag_list" id="vo"}
+      <li {if condition="$tag_id eq $vo['id']"}class="swiper-slide active"{/if}><a data="{$vo['id']}" href="javascript:;">{$vo['name']}</a></li>
+      {/volist}
+    </ul>
+    {if condition="$area_list"}
+      <ul class="stui-screen__list type-slide bottom-line-dot clearfix" id="area_box">
+        <li> <span class="text-muted">{$classname['name']}</span> </li>
+        <li class="{empty name="area_id"}swiper-slide active{/empty}"><a href="javascript:;" data="0">{:lang('All')}</a></li>
+        {volist name="area_list" id="vo"}
+          <li {if condition="$area_id eq $vo['id']"}class="swiper-slide active"{/if}><a data="{$vo['id']}" href="javascript:;">{$vo['name']}</a></li>
+        {/volist}
+      </ul>
+    {/if}
+  </div>
+</div>
+<div class="stui-pannel stui-pannel-bg clearfix">
+  <div class="stui-pannel-box">
+    <div class="col-pd"> <a class="hidden-xs" href="javascript:;"> 
+      <!--分类广告位1-->
+      <script language="javascript" src="/poster/index/pid/7"></script>
+      <!--分类广告位1--> </a> </div>
+  </div>
+</div>
+<div class="stui-pannel clearfix">
+<div class="stui-pannel-box padding-0">
+<div class="col-lg-wide-75 col-xs-1 padding-0">
+<div class="col-pd stui-pannel-bg">
+  <div class="stui-pannel_hd">
+    <div class="stui-pannel__head clearfix">
+      <h3 class="title"> <img src="__ROOT__/tpl/mscms/msvodx/picture/icon_5.png"/> <a href="javascript:;">{:lang('NovelList')}</a> </h3>
+    </div>
+  </div>
+  <div class="stui-pannel_bd clearfix">
+    <ul class="stui-vodlist__media active col-pd clearfix">
+      {volist name="list" id="vo"}
+      <li>
+        <div class="thumb"> <a class="w-thumb stui-vodlist__thumb active lazyload" href="{:url('novel/show',array('id'=>$vo['id']))}" title="{$vo['title']}" data-original="{$vo['thumbnail']}" style="border-radius:5px;background-image: url({$vo['thumbnail']});"> </a> </div>
+        <div class="detail">
+          <h4 class="title" style="height:18px;overflow:hidden"><a href="{:url('novel/show',array('id'=>$vo['id']))}" style="">{$vo['title']}</a></h4>
+          <p class="hidden-sm hidden-xs" style="height:45px;">
+          {if condition="$vo['short_info']"}
+            {$vo['short_info']}
+          {else/}
+            {:lang('NoIntro')}...
+          {/if}</p>
+          <p class="margin-0 font-12">
+            <span class="hidden-xs">
+              <span class="text-muted">{:lang('Read')}：{$vo['click']} {:lang('Times')}</span>
+              <span class="split-line"></span>
+            </span> 
+            <span class="text-muted">{:lang('Time')}：</span>{$vo['update_time']|date="Y-m-d",###}<span class="split-line"></span>
+            <span class="text-muted">{:lang('Gold')}：</span>
+            {if condition="$vo['gold'] eq 0"}
+              {:lang('Free')}
+            {else/}
+              {$vo['gold']}
+            {/if}</p>
+        </div>
+      </li>
+      {/volist}
+    </ul>
+  </div>
+</div>
+<br>
+<ul class="stui-page text-center cleafix">
+  {$pages}
+</ul>
+<form action="" method="get" id="forms">
+  <input type="hidden" id="current_tag_id" name="tag_id"  value="{$tag_id|default='0'}" >
+  <input type="hidden" id="current_sub_cid" name="sub_cid"  value="{$sub_cid|default='0'}" >
+  <input type="hidden" id="current_cid" name="cid"  value="{$cid|default='0'}" >
+  <input type="hidden" id="current_area_id" name="area_id"  value="{$area_id|default='0'}" >
+</form>
+<script type="text/javascript">
+$(function () {
+$('#sub_box').find('a').click(function(){
+var sub = $(this).attr('data');
+$('#current_sub_cid').val(sub);
+$('#forms').submit();
+})
+$('#class_box').find('a').click(function(){
+var cid = $(this).attr('data');
+$('#current_cid').val(cid);
+$('#current_sub_cid').val(0);
+$('#forms').submit();
+})
+$('#tag_box').find('a').click(function(){
+var tag_id = $(this).attr('data');
+$('#current_tag_id').val(tag_id);
+$('#forms').submit();
+})
+$('#area_box').find('a').click(function(){
+var area_id = $(this).attr('data');
+$('#current_area_id').val(area_id);
+$('#forms').submit();
+})
+});
+</script>
+<link href="__ROOT__/tpl/mscms/msvodx/css/images.css" rel="stylesheet">
+<div class="stui-pannel stui-pannel-bg clearfix">
+  <div class="stui-pannel-box">
+    <div class="col-pd"> <a class="hidden-xs" href="javascript:;"> 
+      <!--分类广告位2-->
+      <script language="javascript" src="/poster/index/pid/8"></script>
+      <!--分类广告位2--> </a> </div>
+  </div>
+</div>
+{include file="common/footer"}

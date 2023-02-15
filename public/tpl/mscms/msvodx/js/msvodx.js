@@ -1,0 +1,13 @@
+document.write("<script type=\"text\/javascript\" src=\"\/tpl\/mscms\/msvodx\/js\/jquery.min.js\"><\/script>");
+document.write("<script type=\"text\/javascript\" src=\"\/tpl\/mscms\/msvodx\/js\/stui_default.js\"><\/script>");
+document.write("<script type=\"text\/javascript\" src=\"\/tpl\/mscms\/msvodx\/js\/stui_block.js \"><\/script>");
+document.write("<script type=\"text\/javascript\" src=\"\/tpl\/mscms\/static\/js\/index.js\"><\/script>");
+document.write("<script type=\"text\/javascript\" src=\"\/tpl\/mscms\/static\/js\/common.js\"><\/script>");
+document.write("<script type=\"text\/javascript\" src=\"\/tpl\/mscms\/static\/js\/layer\/layer.js\"><\/script>");
+document.write("<script type=\"text\/javascript\" charset=\"utf-8\" src=\"\/tpl\/mscms\/static\/js\/layui\/layui.js\"><\/script>");
+document.write("<link rel=\"stylesheet\" href=\"\/tpl\/mscms\/msvodx\/css\/iconfont.css\" type=\"text\/css\" \/>");
+document.write("<link rel=\"stylesheet\" href=\"\/tpl\/mscms\/msvodx\/css\/stui_block.css\" type=\"text\/css\" \/>");
+document.write("<link rel=\"stylesheet\" href=\"\/tpl\/mscms\/msvodx\/css\/stui_block_color.css\" type=\"text\/css\" \/>");
+document.write("<link rel=\"stylesheet\" href=\"\/tpl\/mscms\/msvodx\/css\/stui_default.css\" type=\"text\/css\" \/>");
+document.write("<link rel=\"stylesheet\" href=\"http:\/\/www.wapadd.cn\/icons\/awesome\/font-awesome.min.css\" type=\"text\/css\" \/>");
+document.write("<link rel=\"stylesheet\" href=\"\/tpl\/mscms\/static\/js\/layui\/css\/layui.css\">");

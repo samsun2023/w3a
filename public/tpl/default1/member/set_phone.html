@@ -1,0 +1,303 @@
+{include file="common/top"}
+<link rel="stylesheet" href="__ROOT__/tpl/mscms/msvodx/css/member.css">
+<link rel="stylesheet" href="__ROOT__/tpl/mscms/msvodx/css/font.css">
+<script>
+    //init vars
+    var timerIndex = null;
+    var curTime = 0;
+    var curObj = null;        //当前邮箱地址对象
+    var curGetCodeBtn = null;     //当前获取按钮对象
+    var curVerifyBox = null;      //当前验证码输入框对象
+    var tel = "{$info['tel']}";
+    $(function () {
+        $('#getCodeBtn').on('click', step1);
+        $('#getCodeBtnNew').on('click', step2);
+
+
+        $('#saveBindBtn').click(function(){
+            checkCode(true,function(resp){
+                if(resp.resultCode==0){
+                    $('#step2').hide('slow');
+                    $('#step3').show('slow');
+                    clearInterval(timerIndex);
+                }else{
+                    layer.tips(resp.message,curVerifyBox);
+                }
+            });
+        });
+
+        $('#nextStepBtn').click(function(){
+            checkCode(false,function(resp){
+                if(resp.resultCode==0){
+                    $('#step1').hide('slow');
+                    $('#step2').show('slow');
+                    curObj=null;
+                    clearInterval(timerIndex);
+                }else{
+                    layer.tips(resp.message,curVerifyBox);
+                }
+
+            });
+        });
+        if(tel){
+            step1();
+        }else{
+            $('#step1').hide();
+            $('#step2').show();
+            step2();
+        }
+
+    });
+
+    function step1(){
+        curObj = $('#tel');
+        curGetCodeBtn = $('#getCodeBtn');
+        curVerifyBox = $('#VerifyCode');
+        sendCode(false);
+    }
+
+    function step2(){
+        curObj = $('#telNew');
+        curGetCodeBtn = $('#getCodeBtnNew');
+        curVerifyBox = $('#VerifyCodeNew');
+        sendCode(true);
+    }
+
+    //timer
+    function timer(isBindNew) {
+        curTime--;
+        if (curTime <= 0) {
+            clearInterval(timerIndex);
+            curGetCodeBtn.html("{:lang('GetCode')}").on('click', function(){
+                if(isBindNew){
+                    step2();
+                }else{
+                    step1();
+                }
+            }).removeClass('sent');
+        }else{
+            curGetCodeBtn.html("{:lang('GetCode')}"+'(' + curTime + "{:lang('Second')}"+')').addClass('sent');
+        }
+    }
+
+    //send code
+    function sendCode(isBindNew) {
+        var pregStr = /((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\d{8}$/;
+        var mobile=curObj.val();
+        if (pregStr.test(mobile)) {
+            var url = "{:url('api/member_mobile_send')}";
+            var postData = {mobile: mobile};
+            if (isBindNew==true) postData.type = 'authNew';
+            var _tmpClick=curGetCodeBtn.click;
+            curGetCodeBtn.unbind();
+            $.post(url, postData, function (resp) {
+                if (resp.resultCode == 0) {
+                    curVerifyBox.focus();
+                    layer.tips("{:lang('SendCodeM')}", curObj);
+
+                    curTime = 35;//验证重复获取间隔
+                    curGetCodeBtn.html("{:lang('GetCode')}"+'('+curTime+"{:lang('Second')}"+')').addClass('sent');
+                    timerIndex = setInterval("timer(" + isBindNew + ")", 1000);
+                } else {
+                    layer.tips(resp.message, curObj);
+                    curGetCodeBtn.on('click',function(){
+                        if(isBindNew==true){
+                            step2();
+                        }else{
+                            step1();
+                        }
+                    })
+                }
+            }, 'JSON');
+        } else {
+            curObj.focus();
+            layer.tips("{:lang('PhoneOk')}", curObj);
+            return false;
+        }
+    }
+
+    function checkCode(isBindNew,callBack){
+        if(curObj==null || curObj.val()==''){
+            layer.msg("{:lang('SendCodeB')}");
+            return false;
+        }
+        var url='{:url("api/member_mobile_verify_code")}';
+        var postData={code:curVerifyBox.val(),mobile:curObj.val()};
+        if(isBindNew==true) postData.type='authNew';
+        $.ajax({
+            url:url,
+            type:'POST',
+            dataType:'JSON',
+            data:postData,
+            async:false,
+            success:function(resp){
+                callBack(resp);
+            }
+        });
+    }
+
+</script>
+<div id="block-B" class="pp_con_wrap" style="border-radius:15px;">
+    <div class="pp_main fc-main clearfix" id="J_verify-phone">
+        <!--外框架结束-->
+        <div class="top_tips">
+            <i class="pp_icon diamond_gray"></i>
+            {:lang('SeekPwdT')}
+        </div>
+        <div  id="step1" class="pp_pw_retakeStep" >
+            <div class="retakeStep_wrap">
+                <div class="pp_icon step_bg stepOne">
+                    <div class="step_list">
+                        <ul>
+                            <li class="step_pass">1.{:lang('SeekPwd1')}</li>
+                            <li>2.{:lang('MbilePwd2')}</li>
+                            <li>3.{:lang('SeekPwd3')}</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="step_con width480">
+                    <div class="pp_account_form_item" style="margin-bottom: 5px;">
+                        {if condition="empty($info['tel']) "}
+                        {:lang('UsSetPwd1')}
+                        {else/}
+                        {:lang('UsSetPwd2')}<var>{$info['tel_asterisk']}</var>{:lang('UsSetPwd3')}
+                        {/if}
+                    </div>
+                    <form action="">
+                        <div class="pp_account_form_item">
+                            <span class="vl-inline item_title_big">
+                                <label>{:lang('OldMobile')}：</label>
+                            </span>
+                            <span class="vl-inline item_input">
+                                <input id="tel" class="input-common input-common-ph" type="text"
+                                       placeholder="{:lang('SeekAllPhe')}">
+                            </span>
+                        </div>
+                    <!--图文验证码 开始--><!--修改-->
+                   <!-- <div class="pp_account_form_item mt5">
+                        <span class="vl-inline item_title_big tr">
+                            <label for="">验证码：</label>
+                        </span>
+                        <span class="vl-inline item_input">
+                            <input class="input-common" type="text" placeholder="请输入验证码" id="J_code-piccode">
+                            <span class="yzimg" id="piccodeimg"><img src="http://passport.iqiyi.com/register/vcode.php?r=0.8545576247216254"> </span>
+                        </span>
+                        <span class="error_warnning dn" id="J_piccode-warnInfo"></span>
+                    </div>-->
+                    <!--图文验证码 结束-->
+                    <!--短信验证码 开始--><!--修改-->
+                    <div class="pp_account_form_item mt5">
+                        <span class="vl-inline item_title_big tr">
+                            <label for="">{:lang('MobileCode')}：</label>
+                        </span>
+                        <span class="vl-inline item_input">
+                            <span class="vl-inline item_input_w271">
+                                <input class="input-common input_normal" type="text" placeholder="{:lang('SeekCode')}" id="VerifyCode">
+                                <span class="vl-inline fc-btnBox" style="display:inline-block;right:24px;height:36px;">
+                                    <a class="pc-btn" type="4" href="javascript:void(0)" id="getCodeBtn" style="height:36px;line-height:36px;">{:lang('GetCode')}</a>
+                                </span>
+                            </span>
+                        </span>
+                        <span class="error_warnning dn" id="J_warn-code"></span>
+                    </div>
+                    <!--发送验证按钮开始-->
+                    <div class="pp_account_form_item mt8">
+                        <span class="vl-inline item_title_big">
+                            <label for=""></label>
+                        </span>
+                        <span class="vl-inline">
+                            <a class="pc-btn pc-btn-green pp_btn_fillet pp_btn_width98" href="javascript:void(0)" type="4" id="nextStepBtn" style="margin-top: 20px;height:32px;line-height:32px;width:auto;padding:0 20px;">
+                            {:lang('SeekStep')}
+                            </a>
+                        </span>
+                    </div>
+                    <!--发送验证邮件按钮结束-->
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!--设置新手机-->
+        <div id="step2" class="pp_pw_retakeStep" style="display: none;" >
+            <div class="retakeStep_wrap">
+                <div class="pp_icon step_bg stepTwo">
+                    <div class="step_list">
+                        <ul>
+                            <li class="step_pass">1.{:lang('SeekPwd1')}</li>
+                            <li class="step_pass">2.{:lang('MbilePwd2')}</li>
+                            <li>3.{:lang('SeekPwd3')}</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="step_con">
+                    <form action="">
+                        <div class="pp_account_form_item">
+                            <span class="vl-inline item_title_big">
+                                <label>{:lang('MbilePwd2')}：</label>
+                            </span>
+                            <span class="vl-inline item_input">
+                                <input id="telNew" class="input-common input-common-ph" type="text"
+                                       placeholder="{:lang('BdMobile')}">
+                            </span>
+                            <a class="set-warnning" id="getCodeBtnNew">{:lang('GetCode')}</a>
+                        </div>
+                   <!--     <div class="pp_account_form_item mt5">
+                        <span class="vl-inline item_title_big tr">
+                            <label for="">验证码：</label>
+                        </span>
+                            <span class="vl-inline item_input">
+                            <input class="input-common" type="text" placeholder="请输入验证码" id="J_code-piccode">
+                            <span class="yzimg" id="piccodeimg"><img src="http://passport.iqiyi.com/register/vcode.php?r=0.8545576247216254"> </span>
+                        </span>
+                            <span class="error_warnning dn" id="J_piccode-warnInfo"></span>
+                        </div>-->
+                        <div class="pp_account_form_item" style="margin-top:10px;">
+                            <span class="vl-inline item_title_big">
+                                <label>{:lang('MobileCode')}：</label>
+                            </span>
+                            <span class="vl-inline item_input" style="width: 170px;">
+                                <input id="VerifyCodeNew" class="input-common input-common-ph"
+                                       type="text" placeholder="{:lang('SeekCode')}">
+                            </span>
+                        </div>
+                        <!--发送验证按钮开始-->
+                        <div class="pp_account_form_item">
+                             <span class="vl-inline item_title_big">
+                                <label></label>
+                            </span>
+                            <span class="vl-inline">
+                             <a id="saveBindBtn" class="pc-btn pc-btn-green" href="javascript:void(0)"
+                                style="width: 150px;margin-top: 25px;">{:lang('SeekPwdSmt')}</a>
+                            </span>
+                        </div>
+                        <!--发送验证邮件按钮结束-->
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!--修改成功-->
+        <div id="step3" class="pp_pw_retakeStep"  style="display: none">
+            <div class="retakeStep_wrap">
+                <div class="pp_icon step_bg stepThree">
+                    <div class="step_list">
+                        <ul>
+                            <li class="step_pass">1.{:lang('SeekPwd1')}</li>
+                            <li class="step_pass">2.{:lang('MbilePwd2')}</li>
+                            <li class="step_pass">3.{:lang('SeekPwd3')}</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="step_con">
+                    <div class="success_note">
+                        <i class="success_hint_bd btn fn-baocunchenggong" style="font-size:75px;"></i>
+                        <span>{:lang('SeekPhone')}</span><br>
+                        <a href="{:url('member/member')}" style="width:auto;padding:0 15px;">{:lang('BlackUser')}</a>
+                        <a href="/" style="width:auto;padding:0 15px;">{:lang('IndexHome')}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

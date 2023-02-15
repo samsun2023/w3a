@@ -1,0 +1,435 @@
+{include file="common/top"}
+<link rel="stylesheet" href="__ROOT__/tpl/mscms/msvodx/css/viewer.min.css">
+<link rel="stylesheet" href="__ROOT__/tpl/mscms/msvodx/css/member.css">
+<script type="application/javascript" charset="utf-8" src="/static/UEditor/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="/static/UEditor/ueditor.all.min.js"></script>
+<script type="text/javascript" src="/static/plupload-2.3.6/js/plupload.full.min.js"></script>
+<script type="text/javascript" src="/static/xuploader/webServerUploader.js"></script>
+<style>
+
+</style>
+
+<div class="s-body">
+    <div class="content">
+        <!--左边选择-->
+        {include file="member/common"}
+        <!--右边内容-->
+        <div class="M-content">
+            <div class="M-info">
+                <div class="">
+                    <div class="out-top">
+                        <p class="out-title"><b>{:lang('Deposit')}</b> </p>
+                        <div class="out-right">
+                            <a class="add_card"><i class="btn "></i>{:lang('AddDepAcc')}</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+                            <a href="{:url('member/record_out_pay')}">{:lang('DepositLog')}</a>
+                        </div>
+                    </div>
+                    <div class="out-detail">
+                        <ul>
+                            <li>
+                                <label>{:lang('DepAccount')}：</label>
+                                <div class="choice-bank">
+                                    {notempty name="momey_account"}
+                                    {volist name="momey_account" id='v'}
+                                    <p>
+                                        <input type="radio" name="bank" id="t{$key}" value="{$v['id']}" style="margin-top:-5px;"/>
+                                        <label for="t{$key}">{$v['title']}</label>
+                                        <span class="btn fn-shanchu1" onclick="pay_way_del('{$v['id']}')"></span>
+                                    </p>
+                                    {/volist}
+                                    {else/}
+                                    <!--没有账户时显示下面那一行-->
+                                    <p class="not-comment">{:lang('NotAccount')}</p>
+                                    {/notempty}
+
+                                </div>
+                            </li>
+                            {if condition="$config eq 1"}
+                            <li>
+                                <label>{:lang('DepGolds')}({$menber_info['money']})</label>
+                                <div class="money-num">
+                                    <span class="btn fn-jinbi"></span>
+                                    <input type="hidden" value="0" name="money" id="paymoney">
+                                    <input type="number" placeholder="{:lang('DepYes')}{$menber_info['money']}{:lang('GetGolds')}" onblur="get_mun()" id="fname" />
+                                    <span class="pay-explain">
+                                            {:lang('DepToAcc')} <b id="money">0</b> {:lang('Unit')}
+                                    </span>
+                                </div>
+                            </li>
+                            <li style="padding-left: 95px;color: #bbb;line-height: 20px;">
+                                <span><i class="btn fn-wenxintishi" style="font-size: 13px;margin-bottom: 5px;"></i>{:lang('Prompt')}：</span>
+                                <p>1、{$gold_exchange_rate}{:lang('Deposit1')}{$min_withdrawals}{:lang('GetGolds')}。</p>
+                                <p>2、{:lang('Deposit2')}{$gold_exchange_rate}{:lang('Deposit3')}。</p>
+                            </li>
+                            <a class="submit" id="submit" style="cursor:pointer;" onclick="submitmoney('j')">{:lang('DepositSub')}</a>
+                            {else /}
+                            <li>
+                                <label>{:lang('DepKb')}：</label>
+                                <div class="money-num">
+                                    <span class="btn fn-jinbi"></span>
+                                    <input type="hidden" value="0" name="money" id="paymoney">
+                                    <input type="number" placeholder="{:lang('DepKbSum')}" onblur="get_mun_kb(this)" id="fname"/>
+                                    <span class="pay-explain">
+                                            {:lang('DepKbYes')} <b id="k_money">{$menber_info['k_money']}</b> {:lang('Single')}
+                                        </span>
+                                </div>
+                            </li>
+                            <li style="padding-left: 95px;color: #bbb;line-height: 20px;">
+                                <span><i class="btn fn-wenxintishi" style="font-size: 13px;margin-bottom: 5px;"></i>{:lang('Prompt')}：</span>
+                                <p>1、{:lang('Deposit4')}<span id="min_withdrawals">{$min_withdrawals}</span>{:lang('Single')}。</p>
+                                <p>2、{:lang('Deposit5')}。</p>
+                            </li>
+                            <a class="submit" id="submit" onclick="" style="background:#ccc;">{:lang('DepositSub')}</a>
+                            {/if}
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="add-card" style="display: none;">
+                    <div class="switch">
+                        <span data-for="Bank" class="buyType active">{:lang('AddBanks')}<i></i></span>
+                        <span data-for="Alipay" class="buyType">{:lang('AddAlipay')}<i></i></span>
+                        <span data-for="Wx" class="buyType">{:lang('AddWeiXin')}<i></i></span>
+                    </div>
+                    {php}
+                        $banklist = [
+                            "中国银行",
+                            "中国工商银行",
+                            "中国建设银行",
+                            "中国农业银行",
+                            "中国光大银行",
+                            "中国民生银行",
+                            "中信银行",
+                            "交通银行",
+                            "华夏银行",
+                            "招商银行",
+                            "兴业银行",
+                            "广发银行",
+                            "平安银行",
+                            "上海浦东发展银行",
+                            "浙商银行",
+                            "渤海银行",
+                            "中国邮政储蓄银行",
+                            "北京银行",
+                            "天津银行",
+                            "河北银行"
+                        ];
+                    {/php}
+                    <div class="recharge-box">
+                        <div class="Bank">
+                            <ul>
+                                <li><label style="width: 61px;margin-top: 7px;">{:lang('Bank')}</label>
+                                    <div class="choice-box">
+                                        <select id="bank" name="bank">
+                                            <option value="0">{:lang('BankType')}</option>
+                                            {volist name="$banklist" id="v"}
+                                                <option value="{$v}">{$v}</option>
+                                            {/volist}
+                                        </select>
+                                    </div>
+                                </li>
+                                <li><label>{:lang('BankName')}</label><input type="text" id="account_name" placeholder="{:lang('IsBankName')}"></li>
+                                <li><label>{:lang('BankCn')}</label><input type="number"  id="bankaccount"  placeholder="{:lang('IsBankCn')}"></li>
+                            </ul>
+                            <a onclick="addcar('Bank')">{:lang('AddBanks')}</a>
+                        </div>
+                        <div class="Alipay">
+                            <ul>
+                                <li><label>{:lang('AlipayAcc')}</label><input type="text" id="alipayaccount" placeholder="{:lang('IsAlipay')}"></li>
+                                <li><label>{:lang('AlipayName')}</label><input type="text" id="account_names"  placeholder="{:lang('ApUserName')}" /></li>
+                                <li>
+                                    <label>{:lang('QRcode')}</label>
+                                    <img class="upload-img" id="Alipay_code">
+                                    <input type="hidden" id="Alipay_code_url" value="">
+                                    <button type="button" class="layui-btn" id="Alipay_code_bt">{:lang('UpImages')}</button>
+                                </li>
+                            </ul>
+                            <a onclick="addcar('Alipay')">{:lang('AddAlipay')}</a>
+                        </div>
+                        <div class="Wx">
+                            <ul>
+                                <li><label>{:lang('WXName')}</label><input type="text" id="wxnickname" placeholder="{:lang('IsWXName')}"></li>
+                                <li>
+                                    <label>{:lang('QRcode')}</label>
+                                    <img class="upload-img" id="Wx_code">
+                                    <input type="hidden" id="Wx_code_url" value="">
+                                    <button type="button" class="layui-btn" id="Wx_code_bt">{:lang('UpImages')}</button>
+                                </li>
+                            </ul>
+                            <a onclick="addcar('Wx')">{:lang('AddWeiXin')}</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function(){
+        createWebUploader('Alipay_code_bt','','','image',setAlipayUrl,false);
+        createWebUploader('Wx_code_bt','','','image',setWxUrl,false);
+    });
+    function setAlipayUrl(resp){
+        if(resp.filePath!=undefined){
+            $("#Alipay_code_url").val(resp.filePath);
+            $("#Alipay_code").attr('src',resp.filePath);
+            $("#Alipay_code").show();
+            layer.msg("{:lang('UploadOk')}");
+        }else{
+            layer.msg("{:lang('UploadFail')}");
+            createWebUploader('Alipay_code_bt','','','image',setAlipayUrl,false);
+        }
+    }
+    function setWxUrl(resp){
+        if(resp.filePath!=undefined){
+            $("#Wx_code_url").val(resp.filePath);
+            $("#Wx_code").attr('src',resp.filePath);
+            $("#Wx_code").show();
+            layer.msg("{:lang('UploadOk')}");
+        }else{
+            layer.msg("{:lang('UploadFail')}");
+            createWebUploader('Wx_code_bt','','','image',setWxUrl,false);
+        }
+    }
+</script>
+<script>
+    var gold_exchange={$gold_exchange_rate};
+    var usermoney=parseInt({$menber_info['money']});
+    var min_withdrawals=parseInt({$min_withdrawals});
+    $(function(){
+        $(".add_card").click(function(){
+            layer.open({
+                type: 1,
+                title: "{:lang('AddDeposit')}",
+//                skin: 'layui-layer-rim', //加上边框
+//                area: ['420px', '240px'], //宽高
+                content: $('.add-card')
+            });
+        });
+        $(".choice-box p").click(function () {
+            $(this).siblings().slideToggle();
+            $(".choice-box li").click(function () {
+                var str = $(this).text();
+                $(".choice-box p").html(str + '<i class="btn fn-triangle"></i>');
+                $(".choice-box p").siblings().slideUp();
+                $(".choice-box li").removeClass("on");
+                $(this).addClass("on");
+            });
+        });
+        $(".switch span").click(function(){
+            var $self = $(this).attr("data-for");
+            $(".switch span").removeClass("active");
+            $(this).addClass("active");
+            $(".recharge-box").find("."+$self).show();
+            $(".recharge-box").find("."+$self).siblings().hide();
+        });
+    });
+    function get_mun(){
+        var gold=parseInt($('#fname').val());
+        if(gold<=0 || isNaN(gold) ) gold=1;
+        if(gold>usermoney) gold=usermoney;
+        var fname=Math.floor(gold/gold_exchange);
+        var upfname=fname*gold_exchange;
+        $('#fname').val(upfname);
+        $('#paymoney').val(fname);
+        $('#money').html(fname);
+    }
+    //K币前端验证
+    function get_mun_kb(obj){
+        var symoney = parseInt($(obj).val());
+        var mymoney = parseInt($('#k_money').html()); //余额
+        var min_moy = parseInt($('#min_withdrawals').html()); //最低提现数
+        if(isNaN(symoney)) symoney = 0;
+        if(symoney > mymoney){
+            $("#submit").html("{:lang('Deposit6')}").attr({'onclick':'','style':'background:#ccc'});
+        }else{
+            if(symoney < min_moy){
+                $("#submit").html("{:lang('Deposit7')}"+min_moy).attr({'onclick':'','style':'background:#ccc'});
+            }else{
+                $("#submit").html("{:lang('DepositSub')}").attr({'onclick':'submitmoney("k")','style':'background:#3b9eff'});
+            }
+        }
+    }
+    //删除提现方式
+    function pay_way_del(id){
+        var ids=id;
+        layer.confirm("{:lang('ConfirmDel')}", {
+            btn: ["{:lang('Confirm')}","{:lang('Cancel')}"] //按钮
+        }, function(){
+            var data={id:ids}
+            $.post('/api/way_del',data,function(e){
+                layer.msg("{:lang('DelSuccess')}",{end:function(){
+                    window.location.reload();
+                }});
+            },'json')
+        });
+    }
+    //提交
+    function submitmoney(tx_type){
+        var type=$('input:radio[name="bank"]:checked').val();
+        var paymoney=parseInt($('#paymoney').val());
+        var fname  = parseInt($('#fname').val());    //会员输入数
+        var mmoney = parseInt($('#k_money').html()); //会员余额K数
+        if(type==null||type==""||type=='0'||type==0||typeof(type)=='undefined'){
+            layer.open({
+                content: "{:lang('Deposit8')}"
+                ,skin: 'msg'
+            });
+            return false;
+        }
+        if(tx_type == 'j'){ //金币
+            if(fname<0  || isNaN(fname) || usermoney<fname){
+                layer.open({
+                    content: "{:lang('Deposit9')}"
+                    ,skin: 'msg'
+                });
+                return false;
+            }
+        }else{ //K币
+            if(fname<0  || isNaN(fname)){
+                layer.open({
+                    content: "{:lang('Deposit10')}"
+                    ,skin: 'msg'
+                });
+                return false;
+            }
+        }
+        //AJAX提交数据
+        var url='/api/get_pay'
+        var data={type:type,gold:fname,money:paymoney,tx_type:tx_type}
+        $.post(url,data,function(e){
+            if(e.statusCode==0){
+                layer.open({
+                    content: e.message
+                    ,skin: 'msg'
+                    ,end:function(){
+                        window.location.href="{:url('member/record_out_pay')}";
+                        //window.location.reload();//刷新当前页面.
+                    }
+                });
+            }else {
+                layer.open({
+                    content: e.message
+                    ,skin: 'msg'
+                });
+            }
+        },'json');
+    }
+    function addcar(type) {
+        var url='/api/pay_way';
+        if(type=='Bank'){
+            var account_name=$('#account_name').val();
+            var bank=$("#bank").val();
+            var bankaccount=$('#bankaccount').val();
+            var msg=true;
+            if(bankaccount==null||bankaccount==""){msg="{:lang('IsBankCn')}";}
+            if(account_name==null||account_name==""){msg="{:lang('IsBankName')}";}
+            if(bank==null||bank==""||bank=='0'||bank==0){msg="{:lang('BankType')}";}
+            if(msg==true){
+                var data={type:type,account_name:account_name,bank:bank,bankaccount:bankaccount}
+                $.post(url,data,function(e){
+                    if(e.statusCode==0){
+                        layer.open({
+                            content: e.message
+                            ,skin: 'msg'
+                            ,end:function(){
+                                top.location='/member/get_out_pay.html';
+                            }
+                        });
+                    }else {
+                        layer.open({
+                            content: e.message
+                            ,skin: 'msg'
+
+                        });
+                    }
+                },'json')
+            }else {
+                layer.open({
+                    content: msg
+                    ,skin: 'msg'
+
+                });
+            }
+        }else if(type=='Alipay') {
+            var alipayaccount=$('#alipayaccount').val();
+            var Alipay_code_url=$('#Alipay_code_url').val();
+            var account_name=$('#account_names').val();
+            if(account_name==null||account_name==""){
+                layer.open({
+                    content: "{:lang('ApUserName')}"
+                    ,skin: 'msg'
+                });return false;
+            }
+            if(alipayaccount==null||alipayaccount==""){
+                layer.open({
+                    content: "{:lang('IsAlipay')}"
+                    ,skin: 'msg'
+                });return false;
+            }
+            if(Alipay_code_url==null||Alipay_code_url==""){
+                layer.open({
+                    content: "{:lang('IsQRcode')}"
+                    ,skin: 'msg'
+                });return false;
+            }
+            var data={type:type,alipayaccount:alipayaccount,img:Alipay_code_url,account_name:account_name}
+            $.post(url,data,function(e){
+                if(e.statusCode==0){
+                    layer.open({
+                        content: e.message
+                        ,skin: 'msg'
+                        ,time: 2 //2秒后自动关闭
+                        ,end:function(){
+                            top.location='/member/get_out_pay.html';
+                        }
+                    });
+                }else {
+                    layer.open({
+                        content: e.message
+                        ,skin: 'msg'
+                    });
+                }
+            },'json')
+
+        }else if(type=='Wx') {
+            var wxnickname=$('#wxnickname').val();
+            var Wx_code_url=$('#Wx_code_url').val();
+
+            if(wxnickname==null||wxnickname==""){
+                layer.open({
+                    content: "{:lang('IsWXName')}"
+                    ,skin: 'msg'
+                });return false;
+            }
+            if(Wx_code_url==null||Wx_code_url==""){
+                layer.open({
+                    content: "{:lang('IsQRcode')}"
+                    ,skin: 'msg'
+                });return false;
+            }
+            var data={type:type,alipayaccount:wxnickname,img:Wx_code_url}
+            $.post(url,data,function(e){
+                if(e.statusCode==0){
+                    layer.open({
+                        content: e.message
+                        ,skin: 'msg'
+                        ,time: 2 //2秒后自动关闭
+                        ,end:function(){
+                            top.location='/member/get_out_pay.html';
+                        }
+                    });
+                }else {
+                    layer.open({
+                        content: e.message
+                        ,skin: 'msg'
+                    });
+                }
+            },'json')
+
+        }
+
+    }
+</script>
+{include file="common/footer"}

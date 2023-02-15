@@ -1,0 +1,203 @@
+# 各国语言标识
+
+af 公用荷兰语
+af_ZA 公用荷兰语 _ 南非
+sq 阿尔巴尼亚
+sq_AL 阿尔巴尼亚 _ 阿尔巴尼亚
+ar 阿拉伯语
+ar_DZ 阿拉伯语 _ 阿尔及利亚
+ar_BH 阿拉伯语 _ 巴林
+ar_EG 阿拉伯语 _ 埃及
+ar_IQ 阿拉伯语 _ 伊拉克
+ar_JO 阿拉伯语 _ 约旦
+ar_KW 阿拉伯语 _ 科威特
+ar_LB 阿拉伯语 _ 黎巴嫩
+ar_LY 阿拉伯语 _ 利比亚
+ar_MA 阿拉伯语 _ 摩洛哥
+ar_OM 阿拉伯语 _ 阿曼
+ar_QA 阿拉伯语 _ 卡塔尔
+ar_SA 阿拉伯语 _ 沙特阿拉伯
+ar_SY 阿拉伯语 _ 叙利亚共和国
+ar_TN 阿拉伯语 _ 北非的共和国
+ar_AE 阿拉伯语 _ 阿拉伯联合酋长国
+ar_YE 阿拉伯语 _ 也门
+hy 亚美尼亚
+hy_AM 亚美尼亚的 _亚美尼亚
+az Azeri
+az_AZ_Cyrl Azeri _ (西里尔字母的) 阿塞拜疆
+az_AZ_Latn Azeri(拉丁文) _ 阿塞拜疆
+eu 巴斯克
+eu_ES 巴斯克 _ 巴斯克
+be Belarusian
+be_BY Belarusian _ 白俄罗斯
+bg 保加利亚
+bg_BG 保加利亚 _ 保加利亚
+ca 嘉泰罗尼亚
+ca_ES 嘉泰罗尼亚 _ 嘉泰罗尼亚
+zh_HK 华 _ 香港的 SAR
+zh_MO 华 _ 澳门的 SAR
+zh_CN 华 _ 中国
+zh_CHS 华 (单一化)
+zh_SG 华 _ 新加坡
+zh_TW 华 _ 台湾
+zh_CHT 华 (传统的)
+hr 克罗埃西亚
+hr_HR 克罗埃西亚 _ 克罗埃西亚
+cs 捷克
+cs_CZ 捷克 _ 捷克
+da 丹麦文
+da_DK 丹麦文 _ 丹麦
+div Dhivehi
+div_MV Dhivehi _ 马尔代夫
+nl 荷兰
+nl_BE 荷兰 _ 比利时
+nl_NL 荷兰 _ 荷兰
+en 英国
+en_AU 英语 _ 澳洲
+en_BZ 英语 _ 伯利兹
+en_CA 英语 _ 加拿大
+en_CB 英语 _ 加勒比海
+en_IE 英语 _ 爱尔兰
+en_JM 英语 _ 牙买加
+en_NZ 英语 _ 新西兰
+en_PH 英语 _ 菲律宾共和国
+en_ZA 英语 _ 南非
+en_TT 英语 _ 千里达托贝哥共和国
+en_GB 英语 _ 英国
+en_US 英语 _ 美国
+en_ZW 英国 _ 津巴布韦
+et 爱沙尼亚
+et_EE 爱沙尼亚的 _ 爱沙尼亚
+fo Faroese
+fo_FO Faroese _ 法罗群岛
+fa 波斯语
+fa_IR 波斯语 _ 伊朗王国
+fi 芬兰语
+fi_FI 芬兰语 _ 芬兰
+fr 法国
+fr_BE 法语 _ 比利时
+fr_CA 法语 _ 加拿大
+fr_FR 法语 _ 法国
+fr_LU 法语 _ 卢森堡
+fr_MC 法语 _ 摩纳哥
+fr_CH 法语 _ 瑞士
+gl 加利西亚
+gl_ES 加利西亚 _ 加利西亚
+ka 格鲁吉亚州
+ka_GE 格鲁吉亚州 _ 格鲁吉亚州
+de 德国
+de_AT 德语 _ 奥地利
+de_DE 德语 _ 德国
+de_LI 德语 _ 列支敦士登
+de_LU 德语 _ 卢森堡
+de_CH 德语 _ 瑞士
+el 希腊
+el_GR 希腊 _ 希腊
+gu Gujarati
+gu_IN Gujarati_ 印度
+he 希伯来
+he_IL 希伯来 _以色列
+hi 北印度语
+hi_IN 北印度的 _ 印度
+hu 匈牙利
+hu_HU 匈牙利的 _匈牙利
+is 冰岛语
+is_IS 冰岛的 _ 冰岛
+id 印尼
+id_ID 印尼 _ 印尼
+it 意大利
+it_IT 意大利语 _ 意大利
+it_CH 意大利语 _ 瑞士
+ja 日本
+ja_JP 日语 _日本
+kn 卡纳达语
+kn_IN 卡纳达语 _ 印度
+kk Kazakh
+kk_KZ Kazakh _ 哈萨克
+kok Konkani
+kok_IN Konkani _ 印度
+ko 韩国
+ko_KR 韩语 _ 韩国
+ky Kyrgyz
+ky_KZ Kyrgyz _ 哈萨克
+lv 拉脱维亚
+lv_LV 拉脱维亚的 _ 拉脱维亚
+lt 立陶宛
+lt_LT 立陶宛 _ 立陶宛
+mk 马其顿
+mk_MK 马其顿 _ FYROM
+ms 马来
+ms_BN 马来语 _ 汶莱
+ms_MY 马来语 _ 马来西亚
+mr 马拉地语
+mr_IN 马拉地语 _ 印度
+mn 蒙古
+mn_MN 蒙古 _ 蒙古
+no 挪威
+nb_NO 挪威 (Bokm?l) _ 挪威
+nn_NO 挪威 (Nynorsk)_ 挪威
+pl 波兰
+pl_PL 波兰 _波兰
+pt 葡萄牙
+pt_BR 葡萄牙语 _ 巴西
+pt_PT 葡萄牙语 _ 葡萄牙
+pa Punjab 语
+pa_IN Punjab 语 _印度
+ro 罗马尼亚语
+ro_RO 罗马尼亚语 _罗马尼亚
+ru 俄国
+ru_RU 俄语 _俄国
+sa 梵文
+sa_IN 梵文 _印度
+sr_SP_Cyrl 塞尔维亚 _ (西里尔字母的) 塞尔维亚共和国
+sr_SP_Latn 塞尔维亚 (拉丁文) _ 塞尔维亚共和国
+sk 斯洛伐克
+sk_SK 斯洛伐克 _ 斯洛伐克
+sl 斯洛文尼亚
+sl_SI 斯洛文尼亚 _ 斯洛文尼亚
+es 西班牙
+es_AR 西班牙语 _ 阿根廷
+es_BO 西班牙语 _ 玻利维亚
+es_CL 西班牙语 _ 智利
+es_CO 西班牙语 _ 哥伦比亚
+es_CR 西班牙语 _ 哥斯达黎加
+es_DO 西班牙语 _ 多米尼加共和国
+es_EC 西班牙语 _ 厄瓜多尔
+es_SV 西班牙语 _ 萨尔瓦多
+es_GT 西班牙语 _ 危地马拉
+es_HN 西班牙语 _ 洪都拉斯
+es_MX 西班牙语 _ 墨西哥
+es_NI 西班牙语 _ 尼加拉瓜
+es_PA 西班牙语 _ 巴拿马
+es_PY 西班牙语 _ 巴拉圭
+es_PE 西班牙语 _ 秘鲁
+es_PR 西班牙语 _ 波多黎各
+es_ES 西班牙语 _ 西班牙
+es_UY 西班牙语 _ 乌拉圭
+es_VE 西班牙语 _ 委内瑞拉
+sw Swahili
+sw_KE Swahili_肯尼亚
+sv 瑞典
+sv_FI 瑞典 _ 芬兰
+sv_SE 瑞典 _ 瑞典
+syr Syriac
+syr_SY Syriac_ 叙利亚共和国
+ta 坦米尔
+ta_IN 坦米尔 _ 印度
+tt Tatar
+tt_RU Tatar _ 俄国
+te Telugu
+te_IN Telugu _ 印度
+th 泰国
+th_TH 泰国 _泰国
+tr 土耳其语
+tr_TR 土耳其语 _ 土耳其
+uk 乌克兰
+uk_UA 乌克兰 _乌克兰
+ur Urdu
+ur_PK Urdu _ 巴基斯坦
+uz Uzbek
+uz_UZ_Cyrl Uzbek _ (西里尔字母的) 乌兹别克斯坦
+uz_UZ_Latn Uzbek (拉丁文) _ 乌兹别克斯坦
+vi 越南
+vi_VN 越南 _越南

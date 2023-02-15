@@ -1,0 +1,598 @@
+{include file="common/header"} 
+<br>
+<br>
+<br>
+<br>
+<br>
+<div class="container">
+<div class="stui-pannel stui-pannel-bg clearfix" style="margin:0 -15px 20px;">
+  <div class="stui-pannel-box">
+    <div class="stui-pannel-bd">
+      <div class="stui-player col-pd">
+        <div class="stui-player__video embed-responsive embed-responsive-16by9 clearfix" id="playerBox"> </div>
+        <div class="stui-player__detail detail">
+          <ul class="more-btn">
+            <li> <a href="javascript:;" class="btn btn-default" onClick="window.location.reload()"><i class="fa-history"></i> {:lang('Refresh')}</a> </li>
+            <li class="btn btn-default fn-shoucang1" style="background-color: #f5f5f5;cursor:pointer;"> <i class="fa-heart"></i> <span id="shoucang">{if condition='$isCollected'}{:lang('Collected')}{else/}{:lang('Collect')}{/if}</span> </li>
+            <li class="btn btn-default fn-zan2" id="giveGoodBtn" style="cursor:pointer;"><i class="fa-thumbs-o-up {if condition='$isGooded'}isSelected{/if}"></i> (<span id="goodNum">{$videoInfo['good']}</span>)</li>
+          </ul>
+          <h4 class="title"><b style="color:#FF9900;">{:lang('Playing')}：{$videoInfo['title']}</b></h4>
+          <p class="data margin-0"> <span class="text-muted">{:lang('Class')}：</span><a href="/video/lists.html?cid={$videoInfo['classid']|default=''}" target="_blank">{$videoInfo['classname']|default=''}</a>&nbsp; <span class="split-line"></span> <span class="text-muted hidden-xs">{:lang('Tag')}：</span>{volist name="$videoInfo['taglist']|default=''" id="v"}<a  href="/video/lists.html?tag_id={$v['id']}" target="_blank">{$v['name']|default=''}</a>&nbsp;&nbsp;{/volist} <span class="split-line"></span>
+          {notempty name="$classarea['name']"}
+          <span class="text-muted hidden-xs">{$classname['name']}：</span><a href="/video/lists.html?area_id={$videoInfo['area_id']|default='0'}" target="_blank">{$classarea['name']|default='Null'}</a>&nbsp; <span class="split-line"></span> 
+          {/notempty}
+          <span class="text-muted hidden-xs">{:lang('Uploader')}：</span>{if $videoInfo.user_id>0}<a href="{:url('homepage/index',array('uid'=>$videoInfo['user_id']))}" target="_blank">{$videoInfo['member']|default=''}</a>{else/}{:lang('Admin')}{/if}&nbsp; <span class="split-line"></span><span class="text-muted hidden-xs">{:lang('UploadDate')}：</span><span id="teacher-follow">{:date('Y-m-d', $videoInfo['add_time'])}</span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-wide-75 col-xs-1 padding-0">
+    <div class="stui-pannel stui-pannel-bg clearfix">
+      <div class="stui-pannel-box">
+        <div class="stui-pannel_hd">
+          <div class="stui-pannel__head active bottom-line clearfix">
+            <h3 class="title"><img src="__ROOT__/tpl/mscms/msvodx/images/icon_6.png"/> {:lang('GiveGift')} </h3>
+            <ul class="nav nav-tabs pull-right">
+            </ul>
+          </div>
+        </div>
+        <div class="tab-content stui-pannel_bd col-pd">
+          <div class="mid-tool-bar" id="gift_box" style="color:#666;text-align: center;">{:lang('Loading')}</div>
+        </div>
+      </div>
+    </div>
+    {notempty name="img"}
+    <div class="stui-pannel stui-pannel-bg clearfix">
+      <div class="stui-pannel-box">
+        <div class="stui-pannel_hd">
+          <div class="stui-pannel__head clearfix">
+            <h3 class="title"> <img src="__ROOT__/tpl/mscms/msvodx/images/icon_8.png"/> {:lang('Prints')} </h3>
+          </div>
+        </div>
+        <div class="stui-pannel_bd">
+          <ul class="stui-vodlist__bd clearfix" id="video-img">
+            <li class="col-md-6 col-sm-4 col-xs-3 ">
+              <div class="stui-vodlist__box"> 
+                <a class="stui-vodlist__thumb lazyload" href="javascript:;" data-original="{$videoInfo['thumbnail']}" style="-moz-box-shadow:5px 5px 6px #333333; -webkit-box-shadow:2px 2px 5px #333333; box-shadow:5px 5px 6px #333333;border-radius:0px;background: url({$videoInfo['thumbnail']}) no-repeat; background-position:50% 50%; background-size: cover;">
+                <img src="{$videoInfo['thumbnail']}" style="height:123px;opacity:0;width:100%;position:absolute;top:0;">
+                </a>
+              <!-- <div style="width:100%;height:123px;cursor:pointer;">
+                  <img src="{$videoInfo['thumbnail']}" width="100%" style="height:123px;box-shadow:5px 5px 6px #333333;">
+                </div>
+              </div> -->
+            </li>
+            
+            {volist name="img" id="v"}
+            <li class="col-md-6 col-sm-4 col-xs-3">
+              <div class="stui-vodlist__box"> <!-- <a class="stui-vodlist__thumb lazyload smallimg" href="javascript:;" target="_blank" data-original="{$v}" style="-moz-box-shadow:5px 5px 6px #333333; -webkit-box-shadow:2px 2px 5px #333333; box-shadow:5px 5px 6px #333333;border-radius:0px;background: url({$v}) no-repeat; background-position:50% 50%; background-size: cover;"></a>
+                <div style="width:100%;height:123px;cursor:pointer;">
+                  <img src="{$v}" width="100%" style="height:123px;box-shadow:5px 5px 6px #333333;">
+                </div>  -->
+                <a class="stui-vodlist__thumb lazyload" href="javascript:;" data-original="{$v}" style="-moz-box-shadow:5px 5px 6px #333333; -webkit-box-shadow:2px 2px 5px #333333; box-shadow:5px 5px 6px #333333;border-radius:0px;background: url({$v}) no-repeat; background-position:50% 50%; background-size: cover;">
+                <img src="{$v}" style="height:123px;opacity:0;width:100%;position:absolute;top:0;">
+                </a>
+              </div>
+            </li>
+            {/volist}
+          </ul>
+        </div>
+      </div>
+    </div>
+    {/notempty}
+   {notempty name="videoInfo.info"}
+    <div class="stui-pannel stui-pannel-bg clearfix">
+      <div class="stui-pannel-box">
+        <div class="stui-pannel_hd">
+          <div class="stui-pannel__head clearfix">
+            <h3 class="title"> <img src="__ROOT__/tpl/mscms/msvodx/images/icon_24.png"/> {:lang('Intro')} </h3>
+          </div>
+        </div>
+        <div class="stui-pannel_bd">
+          <div class="detail col-pd"> <span class="detail-sketch">{$videoInfo['info']|htmlspecialchars_decode}</span></div>
+        </div>
+      </div>
+    </div>
+    {/notempty}
+    <div class="stui-pannel stui-pannel-bg clearfix">
+      <div class="stui-pannel-box">
+        <div class="stui-pannel_hd">
+          <div class="stui-pannel__head clearfix">
+            <h3 class="title"> <img src="__ROOT__/tpl/mscms/msvodx/picture/icon_1.png"/> {:lang('GuessYou')} </h3>
+          </div>
+        </div>
+        <div class="stui-pannel_bd">
+          <ul class="stui-vodlist__bd clearfix">
+            <?php
+            $params = array(
+            'type' => 'video',
+            'limit'=>12);
+             $new_list = get_recom_data($params);
+             ?>
+            {volist name="new_list" id="vo"}
+            <li class="col-md-6 col-sm-4 col-xs-3 ">
+              <div class="stui-vodlist__box"> <a class="stui-vodlist__thumb lazyload" href="{:url('video/play',array('id'=>$vo['id']))}" title="{$vo['title']}" data-original="{$vo['thumbnail']}" style="border-radius:15px;background: url({$vo['thumbnail']}) no-repeat; background-position:50% 50%; background-size: cover;"> <span class="play hidden-xs"></span> <span class="pic-text text-right">{$vo['play_time']}</span> </a>
+                <div class="stui-vodlist__detail">
+                  <h4 class="title text-overflow"><a href="{:url('video/play',array('id'=>$vo['id']))}" title="{$vo['title']}">{$vo['title']}</a></h4>
+                  <p class="text text-overflow text-muted hidden-xs">{$vo['update_time']|date="Y-m-d",###} <span style="margin-left:15px;"> <i class="fa fa-dot-circle-o fa-lg"></i> {$vo['gold']}</span> <span style="float:right;"><i class="fa fa-eye fa-lg"></i> {$vo['click']}</span></p>
+                </div>
+              </div>
+            </li>
+            {/volist}
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="stui-pannel stui-pannel-bg clearfix">
+      <div class="stui-pannel-box">
+        
+        <div class="stui-pannel_bd">
+          <div class="detail col-pd">
+            <div class="area-form">
+              <div class="comment-form">
+                <div class="form-cell">
+                  <div class="stui-pannel_hd" style="display:inline-block;">
+                    <div class="stui-pannel__head clearfix">
+                      <h3 class="title"> <img src="__ROOT__/tpl/mscms/msvodx/images/icon_12.png"/> {:lang('Comment')} </h3>
+                    </div>
+                  </div>
+                  <div class="form-wordlimit" style="height:50px;line-height:70px;margin-right:10px;"> 
+				            <span class="form-wordlimit-input input-count" id="length">0</span> <span class="form-wordlimit-upper">/300</span> 
+                  </div>
+                  <div class="form-textarea form-textarea-picdom" style="position:relative">
+                    <textarea data-maxlength="300" name="content" placeholder="{:lang('Evaluates')}"  id="comment_content" ></textarea>
+                    <div class="comment-atuser" style="position:absolute;left:5px;top:8px;background: #ebebeb;font-size: 12px"></div>
+                    <input type="hidden" id="to_user" value="0">
+                    <input type="hidden" id="to_id" value="0">
+                  </div>
+                  <div class="form-toolbar">
+                    <div class="form-tool form-action"> <a href="javascript:;" class="form-btn-submit" id="submit_comment">{:lang('SendEva')}</a> </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="area-box" style="padding-top:0px;">
+              <div class="comment-tab"> <span class="comment-tab-left">{:lang('AllEva')}<em class="num" id="comment_num">(0)</em></span> </div>
+              <div class="comment-list" >
+                <ul id="comment-list">
+                  <li id='not-comment'>{:lang('NoEvaData')}</li>
+                </ul>
+                <div id="more-comment"><span onClick="getCommentList()">{:lang('More')}<i class="btn fn-more"></i></span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{include file="common/footer"}
+<script type="text/javascript" src="/static/ckplayer/ckplayer.js"></script>
+<link rel="stylesheet" href="__ROOT__/tpl/mscms/static/css/viewer.min.css">
+<script type="text/javascript" src="__ROOT__/tpl/mscms/static/js/viewer.min.js"></script>
+<script>
+var viewer = new Viewer(document.getElementById('video-img'), {
+url: 'data-original'
+});
+</script>
+<style>
+.layui-layer-hui{
+background-color: #fff!important;
+color:#000;
+}
+.layui-layer-hui .layui-layer-content{
+font-size:16px!important;
+text-align: left!important;
+}
+.important{
+font-weight: bold;
+color:#843534;
+}
+</style>
+<script src="/static/msvodx/js/video.js"></script>
+<script type="text/javascript">
+var playRequestUrl='{:url("api/payVideo")}';    //*必需配置项
+var player,timer;
+var page = 0;
+var addLiIndex=1;
+var trySeeTime=10;
+function adjump(){
+var canJumpAd="{$adSetting['skip_ad_on']}";
+if(canJumpAd==1){
+player.videoPlay();
+}else{
+layer.msg("{:lang('SkipAd')}",{icon:2,time:2000});
+}
+}
+function replyComment(username,id,to_id){
+var reply = "{:lang('Replys')}"+username+' : ';
+var length = reply.length;
+$('#to_user').val(id);
+$('#to_id').val(to_id);
+//alert(length);
+$('.comment-atuser').html(reply);
+$('#comment_content').val(reply);
+$('#comment_content').focus();
+}
+function getCommentList(){
+var nowDate = new Date().getTime();
+var times = "";
+var url = "{:url('api/getCommentList')}";
+var  resourceId = " {$videoInfo['id']}";
+var data = {
+"page":page,
+"resourceId":resourceId,
+"resourceType":1,
+};
+var html = '';
+$.ajax({
+type: 'POST',
+url: url,
+data: data,
+dataType: 'json',
+success: function(data){
+$('#comment_num').html("("+data.data.count+")");
+var datas = data.data.list;
+if(datas==undefined) return false;
+page++;
+datas.forEach(function(item) {
+var headimgurl = '/static/images/user_dafault_headimg.jpg';
+if(item.headimgurl){
+headimgurl = item.headimgurl;
+}
+var time = parseInt(item.last_time*1000);
+if(parseInt(time+60*30*1000) > nowDate){
+times = "{:lang('JustNow')}";
+}else if(parseInt(time+60*60*1000) > nowDate){
+times = "{:lang('HalfHour')}";
+} else if(parseInt(time+2*60*60*1000) > nowDate){
+times = "{:lang('OneHour')}";
+}else{
+var oDate = new Date(time);
+var Hours = oDate.getHours()>10 ? oDate.getHours() :  '0'+oDate.getHours();
+var Minutes = oDate.getMinutes()>10 ? oDate.getMinutes() :  '0'+oDate.getMinutes();
+times = oDate.getFullYear()+'-'+(oDate.getMonth()+1)+'-'+oDate.getDate()+' '+Hours+':'+Minutes;
+}
+html += '<li id="common_'+item.id+'">';
+html += '<div style="overflow: hidden;padding-bottom: 10px;">';
+html += '   <div class="user-avatar">';
+html += '       <a href="javascript:">';
+html += '           <img src="'+headimgurl+'">';
+html += '       </a>';
+html += '    </div>';
+html += '    <div class="comment-section">';
+html += '   <div class="user-info">';
+html += '       <a href="javascript:" class="user-name">'+item.nickname+'</a>';
+html += '       <span class="comment-timestamp">'+times+'</span>';
+html += '       <span class="comment-Reply" onclick="replyComment(\''+item.nickname+'\',\''+item.send_user+'\',\''+item.id+'\')" ></span>';
+html += '   </div>';
+html += '   <div class="comment-text">'+item.content+'</div>';
+html += '   </div>';
+html += '</div>';
+var list = item.list;
+if(list!=undefined) {
+list.forEach(function(it) {
+var headimgurl = '/static/images/user_dafault_headimg.jpg';
+if(it.headimgurl){
+headimgurl = it.headimgurl;
+}
+var time = parseInt(it.last_time*1000);
+if(parseInt(time+60*30*1000) > nowDate){
+times = "{:lang('JustNow')}";
+}else if(parseInt(time+60*60*1000) > nowDate){
+times = "{:lang('HalfHour')}";
+} else if(parseInt(time+2*60*60*1000) > nowDate){
+times = "{:lang('OneHour')}";
+}else{
+var oDate = new Date(time);
+var Hours = oDate.getHours()>10 ? oDate.getHours() :  '0'+oDate.getHours();
+var Minutes = oDate.getMinutes()>10 ? oDate.getMinutes() :  '0'+oDate.getMinutes();
+times = oDate.getFullYear()+'-'+(oDate.getMonth()+1)+'-'+oDate.getDate()+' '+Hours+':'+Minutes;
+}
+html += '<div style="padding: 15px 20px;overflow: hidden;border-top: 1px solid #fbfbfb;">';
+html += '    <div class="user-avatar">';
+html += '    <a href="javascript:"><img src="'+headimgurl+'"></a>';
+html += '    </div>';
+html += '    <div class="comment-section">';
+html += '    <div class="user-info">';
+html += '    <a href="javascript:" class="user-name">'+it.nickname+'</a>';
+html += '    <span class="comment-timestamp">'+times+'</span>';
+html += '       <span class="comment-Reply" onclick="replyComment(\''+it.nickname+'\',\''+it.send_user+'\',\''+item.id+'\')" ></span>';
+html += '    </div>';
+html += '    <div class="comment-text">'+it.content+'</div>';
+html += '</div>';
+html += '</div>';
+})
+}
+html += ' </li>';
+})
+if(data.data.isMore == 1){
+$('#more-comment').show();
+}else{
+$('#more-comment').hide();
+}
+$('#not-comment').remove();
+$('#comment-list').append(html);
+}
+});
+}
+function loadedHandler(){
+if(player.getMetaDate()){
+player.addListener('pause', pauseHandler);
+player.addListener('play', playHandler);
+}
+}
+function pauseHandler(){
+console.log('pause');
+clearInterval(timer);
+if(trySeeTime>0)layer.msg("{:lang('SeePause')}",{icon:6,time:1000});
+}
+function playHandler(){
+layer.msg("{:lang('SeeStart')}",{icon:6,time:1000});
+timer=setInterval(checkTrySeeTime,1000);
+}
+function checkTrySeeTime(){
+if(trySeeTime<=0){
+layer.msg("{:lang('SeeExpire')}",{icon:2,time:1000});
+//setTimeout("videoPlayInit({$videoInfo['id']})",2000);
+setTimeout("location.href=\"{:url('index/prompt',['id'=>$videoInfo['id']])}\"",1500);
+player.videoPause();
+}else{
+trySeeTime--;
+console.log(trySeeTime);
+}
+}
+function createPlayer(playParams,isTrySee){
+//console.log(playParams);
+if(isTrySee==undefined) isTrySee=false;
+if(layer!=undefined) layer.closeAll();
+var vodUrl=(playParams==undefined)?'#':playParams.videoInfo.url;
+var params={
+container: '#playerBox',
+variable: 'player',
+poster:'{$videoInfo["thumbnail"]}',
+video: vodUrl,
+//loaded:'loadedHandler',
+autoplay:false,
+flashplayer:false
+};
+if(playParams!=undefined){
+$.ajax({
+url:playRequestUrl,
+type:'POST',
+dataType:'JSON',
+data:{id:playParams.videoInfo.id,surePlay:1,isTrySee:isTrySee},
+async:false,
+success:function(resp){
+//console.log(resp);
+if(resp.resultCode!=0){
+layer.msg("{:lang('CanTwatch')}",{time:2000,icon:2});
+return false;
+}
+params.video=resp.data.videoInfo.url;
+if(resp.data.freeType==2 && resp.data.videoInfo.gold>0 && isTrySee){
+//按时长试看
+trySeeTime=resp.data.freeNum;
+//console.log('begion try see:'+trySeeTime+'s');
+params.loaded="loadedHandler";
+}
+},
+error:function(){
+layer.msg("{:lang('LoadFail')}",{time:2000,icon:2});
+return false;
+}
+});
+}
+{if $adSetting['ad_on']==1}
+params.adfront='{$adSetting["pre_ad"]}';
+params.adfrontlink='{$adSetting["pre_ad_url"]}';
+params.adfronttime='{$adSetting["play_video_ad_time"]}';
+params.adpause='{$adSetting["suspend_ad"]}';
+params.adpauselink='{$adSetting["suspend_ad_url"]}';
+params.adpausetime='{$adSetting["play_video_ad_time"]}';
+{/if}
+params.skipButtonShow=false;
+player = new ckplayer(params);
+if(isTrySee) setTimeout("player.changeControlBarShow(false)",1000); //hide control
+if(playParams!=undefined){
+setTimeout("player.videoPlay()",1000);//play
+}
+}
+$(function(){
+getCommentList();
+getGift();
+createPlayer(null,null);
+videoPlayInit({$videoInfo['id']});
+//点赞
+{if condition='$isGooded==false'}
+$(document).on('click','#giveGoodBtn',function(){
+var reqData={resourceType:'video',resourceId:{$videoInfo['id']}};
+$.post('{:url("api/giveGood")}',reqData,function(data){
+//console.log(data);
+if(data.resultCode==0){
+$('#goodNum').html(data.data.good);
+$('#giveGoodBtn').addClass("isSelected");
+layer.msg("{:lang('GiveOk')}",{time:1000,icon:1});
+}else{
+layer.msg("{:lang('GiveFail')}"+data.error,{time:1000,icon:2});
+}
+},'JSON');
+});
+{/if}
+//收藏
+{if condition='!$isCollected'}
+$(document).on('click','.fn-shoucang1',function(){
+var collectData={type:'1',id:'{$videoInfo["id"]}'};
+$.post('{:url("api/colletion")}',collectData,function (data) {
+if(data.resultCode==0){
+$('#shoucang').html("{:lang('Collected')}");
+$('.fn-shoucang1').addClass("isSelected");
+layer.msg("{:lang('CollectOk')}",{time:1000,icon:1});
+}else{
+layer.msg("{:lang('CollectFa')}"+data.error,{time:1000,icon:2});
+}
+},'json');
+});
+{/if}
+$(document).on('keyup','#comment_content',function(){
+var length = $("#comment_content").val().length;
+var atuser_length  = $(".comment-atuser").html().length;
+if(length < atuser_length){
+$(".comment-atuser").html('');
+$("#comment_content").val('');
+$("#length").html(0);
+$('#to_user').val(0);
+$('#to_id').val(0);
+}
+if(atuser_length > 0){
+length = (length - atuser_length) > 0 ?  (length - atuser_length) : 0;
+}
+$("#length").html(length);
+if(length > 300){
+var text = $("#comment_content").val().substring(0,300);
+$("#comment_content").val(text);
+}
+});
+//评论
+$(document).on('click','#submit_comment',function(){
+var content =  $.trim($("#comment_content").val());
+var to_user = $("#to_user").val();
+var to_id = $("#to_id").val();
+if((content == "" || content == undefined || content == null || content == $(".comment-atuser").html())) {
+layer.msg("{:lang('EvaNull')}",{time:1000,icon:5});
+return false;
+}
+var reqData={resourceType:'1',resourceId:{$videoInfo['id']},content:content,to_user:to_user,to_id:to_id};
+$.post('{:url("api/comment")}',reqData,function(data){
+if(data.resultCode==0){
+layer.msg(data.message,{time:1000,icon:1});
+$("#comment_content").val('');
+$("#length").html(0);
+$(".comment-atuser").html('');
+$('#to_user').val(0);
+$('#to_id').val(0);
+if(data.data.comment_examine_on != 1){
+var headimgurl = '/static/images/user_dafault_headimg.jpg';
+if(data.data.userinfo.headimgurl){
+headimgurl = data.data.userinfo.headimgurl;
+}
+var html = '';
+$('#not-comment').remove();
+if(data.data.to_id != 0){
+html += '<div style="padding: 15px 20px;overflow: hidden;border-top: 1px solid #fbfbfb;" id="common_'+data.data.id+'">';
+html += '    <div class="user-avatar">';
+html += '           <img src="'+headimgurl+'">';
+html += '    </div>';
+html += '    <div class="comment-section">';
+html += '    <div class="user-info">';
+html += '    <a href="javascript:" class="user-name">'+data.data.userinfo.nickname+'</a>';
+html += '    <span class="comment-timestamp">'+"{:lang('JustNow')}"+'</span>';
+html += '       <span class="comment-Reply" onclick="replyComment(\''+data.data.userinfo.nickname+'\',\''+data.data.userinfo.id+'\',\''+data.data.to_id+'\')" ></span>';
+html += '    </div>';
+html += '    <div class="comment-text">'+data.data.content+'</div>';
+html += '   </div>';
+html += '</div>';
+$("#common_"+data.data.to_id).append(html);
+var go_id = 'common_'+data.data.id;
+window.location.href="#"+go_id;
+}else{
+html += '<li id="common_'+data.data.id+'">';
+html += '<div style="overflow: hidden;padding-bottom: 10px;">';
+html += '   <div class="user-avatar">';
+html += '       <a href="javascript:">';
+html += '           <img src="'+headimgurl+'">';
+html += '       </a>';
+html += '    </div>';
+html += '    <div class="comment-section">';
+html += '   <div class="user-info">';
+html += '       <a href="javascript:" class="user-name">'+data.data.userinfo.nickname+'</a>';
+html += '       <span class="comment-timestamp">'+"{:lang('JustNow')}"+'</span>';
+html += '       <span class="comment-Reply" onclick="replyComment(\''+data.data.userinfo.nickname+'\',\''+data.data.userinfo.id+'\',\''+data.data.id+'\')" ></span>';
+html += '   </div>';
+html += '   <div class="comment-text">'+data.data.content+'</div>';
+html += '   </div>';
+html += '</div>';
+html += ' </li>';
+$("#comment-list ").prepend(html);
+window.location.href="#comment_content";
+}
+$("#common_"+addLiIndex).hide().slideDown('fast');
+addLiIndex++;
+}
+}else{
+layer.msg("{:lang('EvaFail')}"+data.error,{time:2000,icon:2});
+}
+},'JSON');
+});
+});
+function getGift(){
+var url = "{:url('Api/getGift')}";
+var data = {
+"func": "getNameAndTime" ,
+};
+var html = '';
+$.ajax({
+type: 'POST',
+url: url,
+data: data,
+dataType: 'json',
+success: function(data){
+data.forEach(function(item) {
+html += '<div class="r-cel" title="'+item.name+'" style="display:inline-block;float:left;width:80px;height:125px;border:0px solid #252525;margin:11px;text-align:center;cursor:pointer;position:relative;font-size:10px;color:#999;">' ;
+html += '<img src="'+item.images+'" width="60" style="border-radius:15px;max-height:65px;min-height:45px;">' ;
+html += '<div>'+item.name+'</div>' ;
+html += '<p style="color:#ffb100;">'+item.price+" {:lang('Gold')}"+'</p>' ;
+html += '<a onclick="reward('+item.id+','+item.price+',{$videoInfo.id},1)" style="display: block;height:20px;line-height:20px;background:#35a082;color:#fff;border-radius:10px;font-size:12px;margin:auto;margin-top:10px;padding:0 8px;">'+"{:lang('Gives')}"+'</a>' ;
+html += ' </div>';
+})
+$('#gift_box').html(html);
+}
+});
+}
+</script>
+<script>
+$(function(){
+$(".list-box .tab span").click(function(){
+var $self = $(this);
+$self.addClass("cur").siblings().removeClass("cur");
+var $attr = $self.attr("data-for");
+$(".list-box .sub-tab>div").hide();
+$(".list-box .sub-tab").find("."+ $attr).show();
+});
+$(".select1").on("click","a",function(){
+$(".select1 a").removeClass("cur");
+$(this).addClass("cur");
+});
+});
+function check_logins(){
+$.post('/api/get_login_status','{}',function (e) {
+if(e.resultCode == 3){
+layer.msg("{:lang('OtherLogin')}",
+{
+icon: 5,
+time: 3000,
+shadeClose: false,
+shade: 0.8,
+btn: ["{:lang('Confirm')}"],
+yes:function (index) {
+layer.close(index);
+window.location.reload();
+},
+success: function (layero) {
+var btn = layero.find('.layui-layer-btn');
+btn.css('text-align', 'center');
+}
+},function () {
+window.location.reload();
+});
+}
+},'json');
+setTimeout('check_logins()', 5000);
+}
+</script>
+{if condition="$login_status['resultCode'] eq 1 "}
+<script>
+check_logins();
+</script>
+{/if} 

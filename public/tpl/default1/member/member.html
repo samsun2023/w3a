@@ -1,0 +1,184 @@
+{include file="common/top"}
+<link rel="stylesheet" href="__ROOT__/tpl/mscms/msvodx/css/viewer.min.css">
+
+<script type="application/javascript" charset="utf-8" src="/static/UEditor/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="/static/UEditor/ueditor.all.min.js"></script>
+<script src="__ROOT__/tpl/mscms/msvodx/js/jquery.zclip.min.js"></script>
+<!--uper js files-->
+<script type="text/javascript" src="/static/plupload-2.3.6/js/plupload.full.min.js"></script>
+<script type="text/javascript" src="/static/xuploader/webServerUploader.js"></script>
+<script type="text/javascript">
+$(function(){
+$("#cp-btn").zclip({
+path:'__ROOT__/tpl/mscms/msvodx/js/ZeroClipboard.swf', //记得把ZeroClipboard.swf引入到项目中 
+copy:function(){
+return $('#tg-link').val();
+}
+});
+createWebUploader('choseheadimgurlBtn','','','image',setHeadImgUrl,false);
+});
+function setHeadImgUrl(resp){
+console.log(resp);
+if(resp.filePath!=undefined){
+$("#headimgurl").attr('src',resp.filePath);
+editUserInfo('headimgurl',resp.filePath);
+layer.msg("{:lang('UploadOk')}");
+}else{
+layer.msg("{:lang('UploadFail')}");
+createWebUploader('choseheadimgurlBtn','','','image',setHeadImgUrl,false);
+}
+}
+</script>
+<div class="s-body">
+<div class="content">
+<!--左边选择-->
+{include file="member/common"}
+<!--右边内容-->
+<div class="M-content">
+<div class="M-info">
+<div class="block my-info" style="display: block;">
+<a class="head-pic" id="choseheadimgurlBtn">
+<div class="hred-img"><img src="{$info['headimgurl']}" id="headimgurl" title="{:lang('UpdateHead')}" alt="{:lang('UpdateHead')}"/></div>
+<input type="hidden" id="img_headimgurl" />
+<span>{:lang('UploadHead')}</span>
+</a>
+<div class="info-box">
+<p>
+<span>
+<label>{:lang('MyNickName')} : </label>
+<span id="edit_nickname" style="display: none">
+<input type='text' id="nickname_value" value="{$info['nickname']}" style="border:none;height:20px;width:130px;padding:3px 5px;border-bottom:1px solid #c2c2c2;margin-right:10px;" />
+<span class="btn fn-baocunchenggong" title="{:lang('Save')}" onclick="editUserInfo('nickname',$('#nickname_value').val())" style="font-size: 22px;color:#3b9eff;vertical-align:middle;"></span>
+</span>
+<span id="show_nickname" >
+{$info['nickname']}<var class="btn fn-xiugai edit_btn"  name="nickname" title="{:lang('Edit')}"></var>
+</span>
+</span>
+</p>
+<p>
+<span>
+    <label>{:lang('Sex')} : </label>
+    <span id="edit_sex"  style="display: none"  >
+
+        <input type="radio" id="sex1" name="sex" value="1"  class="replaced" {if condition="$info['sex'] eq '1'"}checked="checked"{/if}> {:lang('Man')}
+        <input type="radio" id="sex2" name="sex" value="2"  class="replaced" {if condition="$info['sex'] eq '2'"}checked="checked"{/if}> {:lang('Woman')}
+        <span class="btn fn-baocunchenggong" title="{:lang('Save')}" onclick="editUserInfo('sex',$('input:radio:checked').val());" style="font-size: 22px;color:#3b9eff;vertical-align:middle;"></span>
+    </span>
+    <span id="show_sex" >
+        {if condition="$info['sex'] eq '1'"}
+        <i class="btn fn-nv man"></i>{:lang('Man')}
+        {elseif condition="$info['sex'] eq '2'" }
+        <i class="btn fn-nv woman"></i>{:lang('Woman')}
+        {else/}
+        <i class="btn fn-nv"></i>{:lang('Unknown')}
+        {/if}
+        <var class="btn fn-xiugai edit_btn" name="sex" title="{:lang('Edit')}"></var>
+    </span>
+</span>
+<span style="margin:0 0 0 20px;">
+    <label>{:lang('UserGold')} : </label><i class="btn fn-jinbi2"></i>{$info['money']}
+</span>
+<a class="renew" href="{:url('systemPay/recharge',['type'=>1])}" style="width:auto;padding:0 15px;line-height:18px;">{:lang('Recharge')}</a>
+<span style="margin:0 0 0 20px;">
+    <label>{:lang('Golds')} : </label>{$info['k_money']}
+</span>
+</p>
+<p>
+{if $info['isVip']==false }
+<span>
+<label>{:lang('Member')} : </label>
+    {:lang('NotVip')}<a class="renew-btn" href="{:url('systemPay/recharge')}" style="line-height:25px;">{:lang('DredgeVip')}</a>
+</span>
+{else/}
+<span>
+<label>{:lang('Member')} : </label>
+<i class="btn fn-vip1 vip"></i>{:lang('VipUser')}
+</span>
+{/if}
+<span style="margin-left:40px;">{:lang('VipDate')} :<var class="time">{if condition="$info['is_permanent'] eq 1"}{:lang('Permanent')}{else/}{if condition="$info['out_time'] gt time()"}{:safe_date('Y-m-d',$info['out_time'])} {:lang('Expire')} {else/}{:lang('PastDue')}{/if}</var><a class="renew" href="{:url('systemPay/recharge')}" style="width:auto;padding:0 15px;line-height:18px;">{:lang('RegVip')}</a>{/if}</span>
+</p>
+<p style="margin-top: 10px;">
+<b>{:lang('HomePage')}：</b><a href="{:request()->domain()}/{:session('member_id')}" style="color: #3b9eff;border-bottom: 1px solid #3b9eff;">{:request()->domain()}/{:session('member_id')}</a>
+</p>
+<p class="exten-box">
+<label>{:lang('Url')} : </label>
+<input type="text" id="tg-link" class="extension" onmouseover="this.select();" readonly="readonly" value="{:request()->domain()}/share/{:session('member_id')}" >
+<button id="cp-btn" class="exten-btn">{:lang('Copy')}</button>
+</p>
+<a {if condition="isSign() neq '1'"} class="sign-btn" onclick="sign()" {else/} class="sign-btn Completion" {/if} ><i class="btn fn-qiandao"></i>{if condition="isSign() neq '1'"}{:lang('NotSign')}{else/}{:lang('YesSign')}{/if} <var>+2</var></a>
+<!--验证-->
+<div class="validate-box">
+{if condition="$register_validate eq 2"}
+<div class="panel-box phone">
+<a href="{:url('member/set_phone')}">
+<span class="icon-btn"><i class="btn fn-shouji"></i></span>
+<div class="icon-info" style="padding:14px 0">
+{if condition="empty($info['tel'])"}
+<p>{:lang('MobileWbd')}</p>
+<p>{:lang('Mobilebd')}</p>
+{else/}
+<p>{:lang('MobileYlz')}</p>
+<p>+86 {$info['tel_asterisk']} <var>{:lang('MobileXg')}</var></p>
+{/if}
+<p>{:lang('MobileHint')}</p>
+</div>
+</a>
+</div>
+{/if}
+{if condition="$register_validate eq 1"}
+<div class="panel-box mailbox">
+<a  href="{:url('member/set_email')}">
+<span class="icon-btn"><i class="btn fn-youxiang"></i></span>
+<div class="icon-info" style="padding:14px 0">
+{if condition="empty($info['email'])"}
+<p>{:lang('EmailWbd')}</p>
+<p>{:lang('Emailbd')}</p>
+{else/}
+<p>{:lang('EmailYlz')}</p>
+<p>{:hidden_mail_str($info['email'])} <var>{:lang('EmailXg')}</var></p>
+{/if}
+<p>{:lang('EmailHint')}</p>
+</div>
+</a>
+</div>
+{/if}
+<div class="panel-box psd">
+<a href="{:url('member/set_pwd')}">
+<span class="icon-btn"><i class="btn fn-mima"></i></span>
+<div class="icon-info" style="padding:25px 0">
+<p>{:lang('ChangePwd')}</p>
+<p>{:lang('PwdHint')}</p>
+</div>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+$('.edit_btn').click(function(){
+var obj_name = $(this).attr('name');
+$('#show_'+obj_name+'').hide();
+$('#edit_'+obj_name+'').show();
+});
+function editUserInfo(key,value){
+var url = "{:url('api/editUserInfo')}";
+$.post(url, {key: key, value: value}, function (data) {
+if (data.resultCode == 0) {
+layer.msg("{:lang('XgSuccess')}", {time: 1000, icon: 1}, function() {
+location.reload();
+});
+} else {
+layer.msg(data.error, {icon: 2, anim: 6, time: 1000});
+}
+}, 'JSON');
+}
+$(".pay-box .tab span").click(function(){
+$(".recharge .tab span").removeClass("on");
+$(this).addClass("on");
+});
+</script>
+{include file="common/bottom"}

@@ -1,0 +1,92 @@
+<link rel="stylesheet" href="__ROOT__/tpl/mscms/msvodx/css/font.css">
+<link rel="stylesheet" href="__ROOT__/tpl/mscms/msvodx/css/member.css">
+<style type="text/css">
+.a-yes{border-top-left-radius:20px;border-top-right-radius:20px;background:#ff9f3b;color:#fff;}
+.b-yes{border-bottom-left-radius:20px;border-bottom-right-radius:20px;background:#ff9f3b;color:#fff;}
+</style>
+<div class="M-left">
+    <ul class="select-box">
+        {if condition="$current_left_menu eq 'member'"}
+            <li class='a-yes' data-for="my-info">
+                <a href="{:url('member/member')}" style="color:#fff;">
+                    <i class="btn fn-info" style="color:#fff;"></i><span>{:lang('LeftCol1')}</span>
+                </a>
+            </li>
+        {else/}
+            <li data-for="my-info">
+                <a href="{:url('member/member')}">
+                    <i class="btn fn-info"></i><span>{:lang('LeftCol1')}</span>
+                </a>
+            </li>
+        {/if}
+        <li {if condition="$current_left_menu eq 'recharge'"} class='on'{/if} data-for="my-info">
+        <a target="_blank" href="{:url('system_pay/recharge')}">
+            <i class="btn fn-recharge"></i><span>{:lang('LeftCol2')}</span>
+        </a>
+        </li>
+         <li {if condition="$current_left_menu eq 'card_pwd'"} class='on'{/if}>
+        <a href="{:url('member/card_pwd')}">
+            <i class="btn fn-qiaquan"></i><span>{:lang('CardPay')}</span>
+        </a>
+        </li>
+        <li {if condition="$current_left_menu eq 'collection'"} class='on'{/if}>
+            <a href="{:url('member/collection_video')}">
+                <i class="btn fn-collection"></i><span>{:lang('LeftCol4')}</span>
+            </a>
+        </li>
+        <li {if condition="$current_left_menu eq 'video'"} class='on'{/if}>
+            <a href="{:url('member/video')}">
+                <i class="btn fn-video"></i><span>{:lang('LeftCol5')}</span>
+            </a>
+        </li>
+        <li {if condition="$current_left_menu eq 'novel'"} class='on'{/if}>
+            <a href="{:url('member/novel')}">
+                <i class="btn fn-novel"></i><span>{:lang('LeftCol6')}</span>
+            </a>
+        </li>
+        <li {if condition="$current_left_menu eq 'img'"} class='on'{/if}>
+            <a href="{:url('member/img')}">
+                <i class="btn fn-img"></i><span>{:lang('LeftCol7')}</span>
+            </a>
+        </li>
+        <li {if condition="$current_left_menu eq 'get_out_pay'"} class='on'{/if}>
+        <a href="{:url('member/get_out_pay')}">
+            <i class="btn fn-tixian"></i><span>{:lang('LeftCol8')}</span>
+        </a>
+        </li>
+        <li {if condition="$current_left_menu eq 'record_k_gold'"} class='on'{/if}>
+        <a href="{:url('member/record_k_gold')}">
+            <i class="btn fn-qiaquan"></i><span>{:lang('LeftCol9')}</span>
+        </a>
+        </li>
+        <li {if condition="$current_left_menu eq 'record_gold'"} class='on'{/if}>
+        <a href="{:url('member/record_gold')}">
+            <i class="btn fn-tubiao207"></i><span>{:lang('LeftCol10')}</span>
+        </a>
+        </li>
+        <li {if condition="$current_left_menu eq 'record_pay'"} class='on'{/if}>
+        <a href="{:url('member/record_pay')}">
+            <i class="btn fn-3"></i><span>{:lang('LeftCol11')}</span>
+        </a>
+        </li>
+        <li {if condition="$current_left_menu eq 'record'"} class='on'{/if}>
+            <a href="{:url('member/record_video')}">
+                <i class="btn fn-icon12"></i><span>{:lang('LeftCol12')}</span>
+            </a>
+        </li>
+        
+        {if condition="$current_left_menu eq 'agent'"}
+            <li class='b-yes'>
+                <a href="{:url('member/agent')}" style="color:#fff;">
+                    <i class="btn fn-management" style="color:#fff;"></i><span>{:lang('LeftCol13')}</span>
+                </a>
+            </li>
+        {else/}
+            <li class="management">
+                <a href="{:url('member/agent')}">
+                    <i class="btn fn-management"></i><span>{:lang('LeftCol13')}</span>
+                </a>
+            </li>
+        {/if}
+    </ul>
+</div>
